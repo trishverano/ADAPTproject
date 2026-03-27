@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Municipal Coastal GIS Portal - Pola</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.6.1/ol.css">
+  <link rel="stylesheet" href="../../shared/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/ol@v10.6.1/dist/ol.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-left">
+      <h1>Municipal Coastal GIS Portal</h1>
+      <p>Pola, Oriental Mindoro</p>
+    </div>
+
+    <div class="logo-row">
+      <img src="../../shared/assets/img/logos/Pola_flag.png" alt="Municipality logo" class="logo">
+      <img src="../../shared/assets/img/logos/ADAPT_Document_Banner.png" alt="Project logo" class="logo banner-logo">
+      <img src="../../shared/assets/img/logos/ADHIKA.png" alt="Adhika logo" class="logo">
+    </div>
+  </header>
+
+  <div class="page">
+    <aside class="sidebar">
+      <div class="panel-card">
+        <h3>Layers</h3>
+
+        <div class="switch-row">
+          <span>Mangroves</span>
+          <label class="switch">
+            <input type="checkbox" id="layerMangrove" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="switch-row">
+          <span>MPA</span>
+          <label class="switch">
+            <input type="checkbox" id="layerMPA" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="switch-row">
+          <span>Disability Types</span>
+          <label class="switch">
+            <input type="checkbox" id="layerVulnDis">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="switch-row">
+          <span>Vulnerability Types</span>
+          <label class="switch">
+            <input type="checkbox" id="layerVulnType">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <h3>Basemap</h3>
+        <select id="basemapSelect" class="widget-select">
+          <option value="light" selected>Light Map</option>
+          <option value="osm">OpenStreetMap</option>
+          <option value="topo">Topographic</option>
+          <option value="satellite">Satellite</option>
+        </select>
+      </div>
+
+      <div class="panel-card">
+        <h3>Weather / Heat</h3>
+        <div id="weatherBox" class="widget-box">Loading weather...</div>
+      </div>
+
+      <div class="panel-card">
+        <h3>Export Map</h3>
+        <button id="exportMapBtn" class="action-btn">Export as JPEG</button>
+      </div>
+
+      <div class="panel-card">
+        <h3>Legend</h3>
+        <div id="legendBox" class="legend-list">Loading legend...</div>
+      </div>
+    </aside>
+
+    <main class="map-wrap">
+      <button id="menuBtn" class="mobile-menu-btn">☰</button>
+      <div id="map"></div>
+      <div id="popup" class="map-popup" style="display:none;"></div>
+    </main>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="../../shared/js/app.js"></script>
+  <script src="../../shared/js/weather.js"></script>
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.querySelector(".sidebar");
+    if (menuBtn && sidebar) {
+      menuBtn.addEventListener("click", function () {
+        sidebar.classList.toggle("active");
+      });
+    }
+  </script>
+</body>
+</html>
