@@ -87,29 +87,35 @@ document.addEventListener("DOMContentLoaded", function () {
   function getBufferColor(type) {
     const value = normalizeValue(type);
 
+    if (value.includes("no take")) return "#d7191c";
     if (value.includes("core")) return "#d7191c";
-    if (value.includes("strict")) return "#7b3294";
     if (value.includes("buffer")) return "#2b83ba";
+    if (value.includes("seagrass")) return "#1b9e77";
     if (value.includes("multiple")) return "#1a9641";
     if (value.includes("sustainable")) return "#fdae61";
-    if (value.includes("seagrass")) return "#1b9e77";
-    if (value.includes("mangrove")) return "#66a61e";
-    if (value.includes("fish")) return "#00a6ca";
-    if (value.includes("sanctuary")) return "#c51b7d";
+
+    return "#808080";
+  }
+
+  function getMarineResourceColor(type) {
+    const value = normalizeValue(type);
+
+    if (value.includes("coral")) return "#ff6b6b";
+    if (value.includes("reef")) return "#ff9f1c";
+    if (value.includes("seagrass")) return "#2ec4b6";
+    if (value.includes("mangrove")) return "#55a630";
+    if (value.includes("fish")) return "#3a86ff";
+    if (value.includes("shell")) return "#8338ec";
 
     return "#808080";
   }
 
   function getMpaType(feature) {
-    return (
-      feature.get("buffer_type") ||
-      feature.get("zone_type") ||
-      feature.get("buffer") ||
-      feature.get("zone") ||
-      feature.get("mpa_type") ||
-      feature.get("type") ||
-      "Unknown"
-    );
+    return feature.get("zone_type") || "Unknown";
+  }
+
+  function getMarineResourceType(feature) {
+    return feature.get("Class_name") || "Unknown";
   }
 
   function zoomToSource(source) {
@@ -139,15 +145,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const view = map.getView();
     const projection = view.getProjection();
     const resolution = view.getResolution();
-    const center = view.getCenter();
+    const centerCoord = view.getCenter();
 
-    if (!resolution || !center) return "Scale N/A";
+    if (!resolution || !centerCoord) return "Scale N/A";
 
-    const mpu = projection.getMetersPerUnit() || 1;
-    const pointResolution = ol.proj.getPointResolution(projection, resolution, center);
-    const dpi = 96;
+    const pointResolution = ol.proj.getPointResolution(projection, resolution, centerCoord);
     const inchesPerMeter = 39.37;
-    const scale = Math.round(pointResolution * mpu * inchesPerMeter * dpi);
+    const dpi = 96;
+    const scale = Math.round(pointResolution * inchesPerMeter * dpi);
 
     return `Scale 1:${scale.toLocaleString()}`;
   }
@@ -156,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // SOURCES
   // =========================
   const mangroveSource = new ol.source.Vector({
-    url: "../../shared/data/pola_mangrove.geojson",
+    url: "../../shared/data/pola_mangroves.geojson",
     format: new ol.format.GeoJSON()
   });
 
@@ -167,6 +172,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const vulnSource = new ol.source.Vector({
     url: "../../shared/data/pola_vuln.geojson",
+    format: new ol.format.GeoJSON()
+  });
+
+  const muniWaterSource = new ol.source.Vector({
+    url: "../../shared/data/pola_muniwaterLine.geojson",
+    format: new ol.format.GeoJSON()
+  });
+
+  const settlementsSource = new ol.source.Vector({
+    url: "../../shared/data/pola_settlements.geojson",
+    format: new ol.format.GeoJSON()
+  });
+
+  const marineResourceSource = new ol.source.Vector({
+    url: "../../shared/data/pola_marineresource.geojson",
     format: new ol.format.GeoJSON()
   });
 
@@ -192,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function mpaStyle(feature) {
     const color = getBufferColor(getMpaType(feature));
-
     return new ol.style.Style({
       fill: new ol.style.Fill({
         color: hexToRgba(color, 0.30)
@@ -211,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function vulnerabilityDisabilityStyle(feature) {
     const color = getDisabilityColor(feature.get("dis_type"));
-
     return new ol.style.Style({
       image: new ol.style.Circle({
         radius: 5,
@@ -226,7 +244,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function vulnerabilityTypeStyle(feature) {
     const color = getVulnerabilityTypeColor(feature.get("vuln_type"));
-
     return new ol.style.Style({
       image: new ol.style.RegularShape({
         points: 4,
@@ -237,6 +254,46 @@ document.addEventListener("DOMContentLoaded", function () {
           color: "white",
           width: 1
         })
+      })
+    });
+  }
+
+  function muniWaterStyle() {
+    return new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "#004aad",
+        width: 3,
+        lineDash: [10, 6]
+      })
+    });
+  }
+
+  function settlementsStyle() {
+    return new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: "rgba(128,128,128,0.35)"
+      }),
+      stroke: new ol.style.Stroke({
+        color: "#666666",
+        width: 1.5
+      })
+    });
+  }
+
+  function marineResourceStyle(feature) {
+    const color = getMarineResourceColor(getMarineResourceType(feature));
+    return new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: hexToRgba(color, 0.30)
+      }),
+      stroke: new ol.style.Stroke({
+        color: color,
+        width: 2
+      }),
+      image: new ol.style.Circle({
+        radius: 5,
+        fill: new ol.style.Fill({ color: color }),
+        stroke: new ol.style.Stroke({ color: "white", width: 1 })
       })
     });
   }
@@ -254,6 +311,24 @@ document.addEventListener("DOMContentLoaded", function () {
     source: mpaSource,
     style: mpaStyle,
     visible: true
+  });
+
+  const marineResourceLayer = new ol.layer.Vector({
+    source: marineResourceSource,
+    style: marineResourceStyle,
+    visible: true
+  });
+
+  const muniWaterLayer = new ol.layer.Vector({
+    source: muniWaterSource,
+    style: muniWaterStyle,
+    visible: true
+  });
+
+  const settlementsLayer = new ol.layer.Vector({
+    source: settlementsSource,
+    style: settlementsStyle,
+    visible: false
   });
 
   const vulnDisLayer = new ol.layer.Vector({
@@ -278,8 +353,11 @@ document.addEventListener("DOMContentLoaded", function () {
       cartoLightLayer,
       topoLayer,
       satelliteLayer,
+      muniWaterLayer,
       mangroveLayer,
       mpaLayer,
+      marineResourceLayer,
+      settlementsLayer,
       vulnDisLayer,
       vulnTypeLayer
     ],
@@ -299,12 +377,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("layerMPA")?.addEventListener("change", function (e) {
     mpaLayer.setVisible(e.target.checked);
-    if (e.target.checked) zoomToSource(mpaSource);
+  });
+
+  document.getElementById("layerMarineResource")?.addEventListener("change", function (e) {
+    marineResourceLayer.setVisible(e.target.checked);
+  });
+
+  document.getElementById("layerMuniWater")?.addEventListener("change", function (e) {
+    muniWaterLayer.setVisible(e.target.checked);
+  });
+
+  document.getElementById("layerSettlements")?.addEventListener("change", function (e) {
+    settlementsLayer.setVisible(e.target.checked);
   });
 
   document.getElementById("layerVulnDis")?.addEventListener("change", function (e) {
     vulnDisLayer.setVisible(e.target.checked);
-
     if (e.target.checked) {
       vulnTypeLayer.setVisible(false);
       const otherToggle = document.getElementById("layerVulnType");
@@ -315,7 +403,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("layerVulnType")?.addEventListener("change", function (e) {
     vulnTypeLayer.setVisible(e.target.checked);
-
     if (e.target.checked) {
       vulnDisLayer.setVisible(false);
       const otherToggle = document.getElementById("layerVulnDis");
@@ -362,28 +449,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const transform = canvas.style.transform;
 
             if (transform && transform.startsWith("matrix(")) {
-              matrix = transform
-                .slice(7, -1)
-                .split(",")
-                .map(Number);
+              matrix = transform.slice(7, -1).split(",").map(Number);
             } else {
               matrix = [1, 0, 0, 1, 0, 0];
             }
 
             mapContext.setTransform(
-              matrix[0],
-              matrix[1],
-              matrix[2],
-              matrix[3],
-              matrix[4],
-              matrix[5]
+              matrix[0], matrix[1], matrix[2],
+              matrix[3], matrix[4], matrix[5]
             );
-
-            const backgroundColor = canvas.parentNode?.style.backgroundColor;
-            if (backgroundColor) {
-              mapContext.fillStyle = backgroundColor;
-              mapContext.fillRect(0, 0, canvas.width, canvas.height);
-            }
 
             mapContext.drawImage(canvas, 0, 0);
           }
@@ -393,11 +467,10 @@ document.addEventListener("DOMContentLoaded", function () {
       mapContext.setTransform(1, 0, 0, 1, 0, 0);
       mapContext.globalAlpha = 1;
 
-      // white info panel
       const panelX = 18;
       const panelY = 18;
-      const panelW = 300;
-      const panelH = 190;
+      const panelW = 320;
+      const panelH = 270;
 
       mapContext.fillStyle = "rgba(255,255,255,0.92)";
       mapContext.fillRect(panelX, panelY, panelW, panelH);
@@ -405,7 +478,6 @@ document.addEventListener("DOMContentLoaded", function () {
       mapContext.lineWidth = 1;
       mapContext.strokeRect(panelX, panelY, panelW, panelH);
 
-      // title
       mapContext.fillStyle = "#123b63";
       mapContext.font = "bold 18px Arial";
       mapContext.fillText("Municipal Coastal GIS Portal", panelX + 14, panelY + 28);
@@ -417,7 +489,6 @@ document.addEventListener("DOMContentLoaded", function () {
       mapContext.fillText(getScaleText(), panelX + 14, panelY + 90);
       mapContext.fillText(`Date: ${new Date().toLocaleDateString()}`, panelX + 14, panelY + 110);
 
-      // legend title
       mapContext.font = "bold 14px Arial";
       mapContext.fillText("Legend", panelX + 14, panelY + 135);
 
@@ -435,6 +506,15 @@ document.addEventListener("DOMContentLoaded", function () {
           mapContext.fillRect(-5, -5, 10, 10);
           mapContext.strokeRect(-5, -5, 10, 10);
           mapContext.restore();
+        } else if (shape === "line") {
+          mapContext.strokeStyle = color;
+          mapContext.lineWidth = 3;
+          mapContext.setLineDash([8, 5]);
+          mapContext.beginPath();
+          mapContext.moveTo(panelX + 14, ly - 4);
+          mapContext.lineTo(panelX + 30, ly - 4);
+          mapContext.stroke();
+          mapContext.setLineDash([]);
         } else {
           mapContext.beginPath();
           mapContext.arc(panelX + 22, ly - 4, 5, 0, 2 * Math.PI);
@@ -448,12 +528,14 @@ document.addEventListener("DOMContentLoaded", function () {
         ly += 20;
       }
 
+      if (muniWaterLayer.getVisible()) drawLegendItem("#004aad", "Municipal Water Extent", "line");
       if (mangroveLayer.getVisible()) drawLegendItem("green", "Mangroves", "circle");
       if (mpaLayer.getVisible()) drawLegendItem("#2b83ba", "MPA", "circle");
+      if (marineResourceLayer.getVisible()) drawLegendItem("#ff6b6b", "Marine Resource", "circle");
+      if (settlementsLayer.getVisible()) drawLegendItem("#666666", "Settlements", "circle");
       if (vulnDisLayer.getVisible()) drawLegendItem("#e41a1c", "Disability Types", "circle");
       if (vulnTypeLayer.getVisible()) drawLegendItem("#d73027", "Vulnerability Types", "diamond");
 
-      // north arrow
       const nx = size[0] - 60;
       const ny = 40;
       mapContext.fillStyle = "#111";
@@ -465,10 +547,8 @@ document.addEventListener("DOMContentLoaded", function () {
       mapContext.lineTo(nx - 10, ny + 24);
       mapContext.lineTo(nx + 10, ny + 24);
       mapContext.closePath();
-      mapContext.fillStyle = "#111";
       mapContext.fill();
 
-      // save jpeg
       try {
         const link = document.createElement("a");
         const muni = (CONFIG.municipality || "map").replace(/\s+/g, "_");
@@ -476,7 +556,7 @@ document.addEventListener("DOMContentLoaded", function () {
         link.href = mapCanvas.toDataURL("image/jpeg", 0.92);
         link.click();
       } catch (err) {
-        alert("Export failed. If Satellite is active, try Light Map or OSM first.");
+        alert("Export failed. If Satellite is active, try Light Map first.");
       }
     });
 
@@ -502,15 +582,20 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
     } else if (foundLayerName === "MPA") {
       html += `
-        <div><strong>Zone / Buffer:</strong> ${props.buffer_type || props.zone_type || props.buffer || props.zone || props.mpa_type || props.type || "N/A"}</div>
-        <div><strong>Name:</strong> ${props.name || props.mpa_name || "N/A"}</div>
-        <div><strong>Area:</strong> ${props.area || props.area_ha || "N/A"}</div>
+        <div><strong>MPA Name:</strong> ${props.mpa_name || "N/A"}</div>
+        <div><strong>Zone Type:</strong> ${props.zone_type || "N/A"}</div>
       `;
-    } else if (foundLayerName === "Mangroves") {
+    } else if (foundLayerName === "Marine Resource") {
       html += `
-        <div><strong>Name:</strong> ${props.name || props.site_name || "N/A"}</div>
-        <div><strong>Barangay:</strong> ${props.barangay || props.brgy || "N/A"}</div>
+        <div><strong>Feature:</strong> ${props.Class_name || "N/A"}</div>
       `;
+    } else if (foundLayerName === "Municipal Water Extent") {
+      html += `
+        <div><strong>Info:</strong> This is the Municipal Water Extent.</div>
+      `;
+    } else {
+      popup.style.display = "none";
+      return;
     }
 
     popup.innerHTML = html;
@@ -529,7 +614,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (layer === vulnDisLayer) foundLayerName = "Disability Types";
       if (layer === vulnTypeLayer) foundLayerName = "Vulnerability Types";
       if (layer === mpaLayer) foundLayerName = "MPA";
-      if (layer === mangroveLayer) foundLayerName = "Mangroves";
+      if (layer === marineResourceLayer) foundLayerName = "Marine Resource";
+      if (layer === muniWaterLayer) foundLayerName = "Municipal Water Extent";
 
       return true;
     });
@@ -553,76 +639,71 @@ document.addEventListener("DOMContentLoaded", function () {
     const disabilityTypes = new Set();
     const vulnTypes = new Set();
     const mpaTypes = new Set();
-
-    let hasUnknownDisability = false;
-    let hasUnknownVulnerability = false;
-    let hasUnknownMPA = false;
+    const marineTypes = new Set();
 
     vulnSource.getFeatures().forEach(function (feature) {
       const disType = feature.get("dis_type");
       const vulnType = feature.get("vuln_type");
 
-      if (disType) {
-        disabilityTypes.add(disType);
-      } else {
-        hasUnknownDisability = true;
-      }
-
-      if (vulnType) {
-        vulnTypes.add(vulnType);
-      } else {
-        hasUnknownVulnerability = true;
-      }
+      if (disType) disabilityTypes.add(disType);
+      if (vulnType) vulnTypes.add(vulnType);
     });
 
     mpaSource.getFeatures().forEach(function (feature) {
       const mpaType = getMpaType(feature);
-      if (mpaType && mpaType !== "Unknown") {
-        mpaTypes.add(mpaType);
-      } else {
-        hasUnknownMPA = true;
-      }
+      if (mpaType) mpaTypes.add(mpaType);
+    });
+
+    marineResourceSource.getFeatures().forEach(function (feature) {
+      const marineType = getMarineResourceType(feature);
+      if (marineType) marineTypes.add(marineType);
     });
 
     let html = "";
 
-    html += `<div><strong>Mangroves</strong></div>`;
+    html += `<div><strong>Municipal Water Extent</strong></div>`;
+    html += `<div><span class="legend-swatch" style="background:#004aad;"></span> Municipal Water Extent</div>`;
+
+    html += `<br><div><strong>Mangroves</strong></div>`;
     html += `<div><span class="legend-swatch" style="background:green;"></span> Mangrove</div>`;
 
     html += `<br><div><strong>MPA</strong></div>`;
-    if (mpaTypes.size === 0 && !hasUnknownMPA) {
+    if (mpaTypes.size === 0) {
       html += `<div>No MPA data loaded yet</div>`;
     } else {
       Array.from(mpaTypes).sort().forEach(function (type) {
         html += `<div><span class="legend-swatch" style="background:${getBufferColor(type)};"></span> ${type}</div>`;
       });
-      if (hasUnknownMPA) {
-        html += `<div><span class="legend-swatch" style="background:#808080;"></span> Other / Unknown</div>`;
-      }
     }
 
+    html += `<br><div><strong>Marine Resource</strong></div>`;
+    if (marineTypes.size === 0) {
+      html += `<div>No marine resource data loaded yet</div>`;
+    } else {
+      Array.from(marineTypes).sort().forEach(function (type) {
+        html += `<div><span class="legend-swatch" style="background:${getMarineResourceColor(type)};"></span> ${type}</div>`;
+      });
+    }
+
+    html += `<br><div><strong>Settlements</strong></div>`;
+    html += `<div><span class="legend-swatch" style="background:#666666;"></span> Settlements</div>`;
+
     html += `<br><div><strong>Disability Types</strong></div>`;
-    if (disabilityTypes.size === 0 && !hasUnknownDisability) {
+    if (disabilityTypes.size === 0) {
       html += `<div>No disability data loaded yet</div>`;
     } else {
       Array.from(disabilityTypes).sort().forEach(function (type) {
         html += `<div><span class="legend-swatch" style="background:${getDisabilityColor(type)};"></span> ${type}</div>`;
       });
-      if (hasUnknownDisability) {
-        html += `<div><span class="legend-swatch" style="background:#808080;"></span> Other / Unknown</div>`;
-      }
     }
 
     html += `<br><div><strong>Vulnerability Types</strong></div>`;
-    if (vulnTypes.size === 0 && !hasUnknownVulnerability) {
+    if (vulnTypes.size === 0) {
       html += `<div>No vulnerability data loaded yet</div>`;
     } else {
       Array.from(vulnTypes).sort().forEach(function (type) {
         html += `<div><span class="legend-swatch" style="background:${getVulnerabilityTypeColor(type)};"></span> ${type}</div>`;
       });
-      if (hasUnknownVulnerability) {
-        html += `<div><span class="legend-swatch" style="background:#808080;"></span> Other / Unknown</div>`;
-      }
     }
 
     legendBox.innerHTML = html;
@@ -640,8 +721,20 @@ document.addEventListener("DOMContentLoaded", function () {
     if (vulnSource.getState() === "ready") updateLegend();
   });
 
+  muniWaterSource.on("change", function () {
+    if (muniWaterSource.getState() === "ready") updateLegend();
+  });
+
+  settlementsSource.on("change", function () {
+    if (settlementsSource.getState() === "ready") updateLegend();
+  });
+
+  marineResourceSource.on("change", function () {
+    if (marineResourceSource.getState() === "ready") updateLegend();
+  });
+
   setTimeout(function () {
     map.updateSize();
     updateLegend();
-  }, 500);
+  }, 700);
 });

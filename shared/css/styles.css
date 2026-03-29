@@ -71,8 +71,8 @@ body {
 }
 
 .sidebar {
-  width: 250px;
-  min-width: 250px;
+  width: 260px;
+  min-width: 260px;
   background: #f7f9fc;
   padding: 12px;
   border-right: 1px solid #d1d5db;
@@ -223,6 +223,7 @@ body {
   font-size: 13px;
   line-height: 1.5;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .map-popup h4 {
@@ -272,7 +273,7 @@ body {
   .sidebar {
     position: absolute;
     top: 0;
-    left: -260px;
+    left: -270px;
     height: 100%;
     z-index: 1100;
     box-shadow: 2px 0 10px rgba(0,0,0,0.15);
