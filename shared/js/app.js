@@ -1,7 +1,44 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // =========================
+  // BACKWARD COMPATIBILITY
+  // =========================
+  if (!window.CONFIG) {
+    window.CONFIG = {};
+  }
+
+  if (!CONFIG.layers) {
+    CONFIG.layers = {
+      mangrove: {
+        enabled: true,
+        url: "../../shared/data/pola_mangrove.geojson"
+      },
+      mpa: {
+        enabled: true,
+        url: "../../shared/data/pola_mpa.geojson"
+      },
+      marineResource: {
+        enabled: true,
+        url: "../../shared/data/pola_marineresource.geojson"
+      },
+      muniWater: {
+        enabled: true,
+        url: "../../shared/data/pola_muniwaterLine.geojson"
+      },
+      settlements: {
+        enabled: true,
+        url: "../../shared/data/pola_settlements.geojson"
+      },
+      vuln: {
+        enabled: true,
+        url: "../../shared/data/pola_vuln.geojson"
+      }
+    };
+  }
+
   const center = CONFIG.center || [121.441, 13.143];
   const zoom = CONFIG.zoom || 13;
-  const province = CONFIG.province || "";
+  const municipality = CONFIG.municipality || "Pola";
+  const province = CONFIG.province || "Oriental Mindoro";
   const layerConfig = CONFIG.layers || {};
 
   // =========================
@@ -165,11 +202,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const input = document.getElementById(id);
     if (!input) return;
 
+    input.disabled = !enabled;
+
     if (!enabled) {
       input.checked = false;
-      input.disabled = true;
       const row = input.closest(".switch-row");
       if (row) row.style.opacity = "0.5";
+    } else {
+      const row = input.closest(".switch-row");
+      if (row) row.style.opacity = "1";
     }
   }
 
@@ -183,6 +224,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function safeFeatures(source) {
     return source ? source.getFeatures() : [];
+  }
+
+  function safeSetHTML(el, html) {
+    if (el) el.innerHTML = html;
   }
 
   // =========================
@@ -407,7 +452,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // =========================
-  // DISABLE MISSING TOGGLES
+  // TOGGLE AVAILABILITY
   // =========================
   setToggleAvailability("layerMangrove", !!mangroveLayer);
   setToggleAvailability("layerMPA", !!mpaLayer);
@@ -531,8 +576,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const panelX = 18;
       const panelY = 18;
-      const panelW = 330;
-      const panelH = 240;
+      const panelW = 340;
+      const panelH = 285;
 
       mapContext.fillStyle = "rgba(255,255,255,0.92)";
       mapContext.fillRect(panelX, panelY, panelW, panelH);
@@ -546,7 +591,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       mapContext.fillStyle = "#222";
       mapContext.font = "14px Arial";
-      mapContext.fillText(`${CONFIG.municipality || ""}, ${province}`, panelX + 14, panelY + 50);
+      mapContext.fillText(`${municipality}, ${province}`, panelX + 14, panelY + 50);
       mapContext.fillText(`Basemap: ${getActiveBasemapName()}`, panelX + 14, panelY + 70);
       mapContext.fillText(getScaleText(), panelX + 14, panelY + 90);
       mapContext.fillText(`Date: ${new Date().toLocaleDateString()}`, panelX + 14, panelY + 110);
@@ -556,15 +601,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let ly = panelY + 155;
 
-      function drawLegendItem(color, label) {
+      function drawLegendItem(color, label, shape = "circle") {
         mapContext.fillStyle = color;
         mapContext.strokeStyle = "#ffffff";
         mapContext.lineWidth = 1;
 
-        mapContext.beginPath();
-        mapContext.arc(panelX + 22, ly - 4, 5, 0, 2 * Math.PI);
-        mapContext.fill();
-        mapContext.stroke();
+        if (shape === "diamond") {
+          mapContext.save();
+          mapContext.translate(panelX + 22, ly - 4);
+          mapContext.rotate(Math.PI / 4);
+          mapContext.fillRect(-5, -5, 10, 10);
+          mapContext.strokeRect(-5, -5, 10, 10);
+          mapContext.restore();
+        } else if (shape === "line") {
+          mapContext.strokeStyle = color;
+          mapContext.lineWidth = 3;
+          mapContext.setLineDash([8, 5]);
+          mapContext.beginPath();
+          mapContext.moveTo(panelX + 14, ly - 4);
+          mapContext.lineTo(panelX + 30, ly - 4);
+          mapContext.stroke();
+          mapContext.setLineDash([]);
+        } else {
+          mapContext.beginPath();
+          mapContext.arc(panelX + 22, ly - 4, 5, 0, 2 * Math.PI);
+          mapContext.fill();
+          mapContext.stroke();
+        }
 
         mapContext.fillStyle = "#222";
         mapContext.font = "13px Arial";
@@ -572,8 +635,13 @@ document.addEventListener("DOMContentLoaded", function () {
         ly += 20;
       }
 
-      if (mangroveLayer && mangroveLayer.getVisible()) drawLegendItem("green", "Mangroves");
-      if (mpaLayer && mpaLayer.getVisible()) drawLegendItem("#2b83ba", "MPA");
+      if (muniWaterLayer && muniWaterLayer.getVisible()) drawLegendItem("#004aad", "Municipal Water Extent", "line");
+      if (mangroveLayer && mangroveLayer.getVisible()) drawLegendItem("green", "Mangroves", "circle");
+      if (mpaLayer && mpaLayer.getVisible()) drawLegendItem("#2b83ba", "MPA", "circle");
+      if (marineResourceLayer && marineResourceLayer.getVisible()) drawLegendItem("#ff6b6b", "Marine Resource", "circle");
+      if (settlementsLayer && settlementsLayer.getVisible()) drawLegendItem("#666666", "Settlements", "circle");
+      if (vulnDisLayer && vulnDisLayer.getVisible()) drawLegendItem("#e41a1c", "Disability Types", "circle");
+      if (vulnTypeLayer && vulnTypeLayer.getVisible()) drawLegendItem("#d73027", "Vulnerability Types", "diamond");
 
       const nx = size[0] - 60;
       const ny = 40;
@@ -590,7 +658,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       try {
         const link = document.createElement("a");
-        const muni = (CONFIG.municipality || "map").replace(/\s+/g, "_");
+        const muni = municipality.replace(/\s+/g, "_");
         link.download = `${muni}_map_export.jpeg`;
         link.href = mapCanvas.toDataURL("image/jpeg", 0.92);
         link.click();
@@ -613,10 +681,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const props = foundFeature.getProperties();
     let html = `<h4>${foundLayerName || "Feature"}</h4>`;
 
-    if (foundLayerName === "MPA") {
+    if (foundLayerName === "Disability Types" || foundLayerName === "Vulnerability Types") {
+      html += `
+        <div><strong>Local Area / Sitio:</strong> ${props.loc_area || "N/A"}</div>
+        <div><strong>Vulnerability Type:</strong> ${props.vuln_type || "N/A"}</div>
+        <div><strong>Disability Type:</strong> ${props.dis_type || "N/A"}</div>
+      `;
+    } else if (foundLayerName === "MPA") {
       html += `
         <div><strong>MPA Name:</strong> ${props.mpa_name || "N/A"}</div>
         <div><strong>Zone Type:</strong> ${props.zone_type || "N/A"}</div>
+      `;
+    } else if (foundLayerName === "Marine Resource") {
+      html += `
+        <div><strong>Feature:</strong> ${props.Class_name || props.class_name || "N/A"}</div>
+      `;
+    } else if (foundLayerName === "Municipal Water Extent") {
+      html += `
+        <div><strong>Info:</strong> This is the Municipal Water Extent.</div>
       `;
     } else if (foundLayerName === "Mangroves") {
       html += `
@@ -627,7 +709,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    popup.innerHTML = html;
+    safeSetHTML(popup, html);
     popup.style.display = "block";
   }
 
@@ -640,8 +722,12 @@ document.addEventListener("DOMContentLoaded", function () {
     map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
       foundFeature = feature;
 
-      if (layer === mangroveLayer) foundLayerName = "Mangroves";
+      if (layer === vulnDisLayer) foundLayerName = "Disability Types";
+      if (layer === vulnTypeLayer) foundLayerName = "Vulnerability Types";
       if (layer === mpaLayer) foundLayerName = "MPA";
+      if (layer === marineResourceLayer) foundLayerName = "Marine Resource";
+      if (layer === muniWaterLayer) foundLayerName = "Municipal Water Extent";
+      if (layer === mangroveLayer) foundLayerName = "Mangroves";
 
       return true;
     });
@@ -662,17 +748,54 @@ document.addEventListener("DOMContentLoaded", function () {
     return `<div><span class="legend-swatch" style="background:${color};"></span> ${label}</div>`;
   }
 
+  function buildLegendLine(color, label) {
+    return `
+      <div>
+        <span class="legend-swatch" style="
+          background:${color};
+          width:18px;
+          height:4px;
+          border-radius:2px;
+          margin-top:5px;
+        "></span> ${label}
+      </div>
+    `;
+  }
+
   function updateLegend() {
     const legendBox = document.getElementById("legendBox");
     if (!legendBox) return;
 
+    const disabilityTypes = new Set();
+    const vulnTypes = new Set();
     const mpaTypes = new Set();
+    const marineTypes = new Set();
+
+    safeFeatures(vulnSource).forEach(function (feature) {
+      const disType = feature.get("dis_type");
+      const vulnType = feature.get("vuln_type");
+
+      if (disType) disabilityTypes.add(disType);
+      if (vulnType) vulnTypes.add(vulnType);
+    });
+
     safeFeatures(mpaSource).forEach(function (feature) {
       const mpaType = getMpaType(feature);
       if (mpaType) mpaTypes.add(mpaType);
     });
 
+    safeFeatures(marineResourceSource).forEach(function (feature) {
+      const marineType = getMarineResourceType(feature);
+      if (marineType) marineTypes.add(marineType);
+    });
+
     let html = "";
+
+    if (muniWaterLayer && muniWaterLayer.getVisible()) {
+      html += `<div><strong>Municipal Water Extent</strong></div>`;
+      html += buildLegendLine("#004aad", "Municipal Water Extent");
+      html += `<br>`;
+    }
 
     if (mangroveLayer && mangroveLayer.getVisible()) {
       html += `<div><strong>Mangroves</strong></div>`;
@@ -692,11 +815,53 @@ document.addEventListener("DOMContentLoaded", function () {
       html += `<br>`;
     }
 
+    if (marineResourceLayer && marineResourceLayer.getVisible()) {
+      html += `<div><strong>Marine Resource</strong></div>`;
+      if (marineTypes.size === 0) {
+        html += `<div>No marine resource data loaded yet</div>`;
+      } else {
+        Array.from(marineTypes).sort().forEach(function (type) {
+          html += buildLegendItem(getMarineResourceColor(type), type);
+        });
+      }
+      html += `<br>`;
+    }
+
+    if (settlementsLayer && settlementsLayer.getVisible()) {
+      html += `<div><strong>Settlements</strong></div>`;
+      html += buildLegendItem("#666666", "Settlements");
+      html += `<br>`;
+    }
+
+    if (vulnDisLayer && vulnDisLayer.getVisible()) {
+      html += `<div><strong>Disability Types</strong></div>`;
+      if (disabilityTypes.size === 0) {
+        html += `<div>No disability data loaded yet</div>`;
+      } else {
+        Array.from(disabilityTypes).sort().forEach(function (type) {
+          html += buildLegendItem(getDisabilityColor(type), type);
+        });
+      }
+      html += `<br>`;
+    }
+
+    if (vulnTypeLayer && vulnTypeLayer.getVisible()) {
+      html += `<div><strong>Vulnerability Types</strong></div>`;
+      if (vulnTypes.size === 0) {
+        html += `<div>No vulnerability data loaded yet</div>`;
+      } else {
+        Array.from(vulnTypes).sort().forEach(function (type) {
+          html += buildLegendItem(getVulnerabilityTypeColor(type), type);
+        });
+      }
+      html += `<br>`;
+    }
+
     if (!html.trim()) {
       html = `<div>Turn on a layer to view its legend.</div>`;
     }
 
-    legendBox.innerHTML = html;
+    safeSetHTML(legendBox, html);
   }
 
   // =========================
@@ -714,6 +879,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  if (vulnSource) {
+    vulnSource.on("change", function () {
+      if (vulnSource.getState() === "ready") updateLegend();
+    });
+  }
+
+  if (muniWaterSource) {
+    muniWaterSource.on("change", function () {
+      if (muniWaterSource.getState() === "ready") updateLegend();
+    });
+  }
+
+  if (settlementsSource) {
+    settlementsSource.on("change", function () {
+      if (settlementsSource.getState() === "ready") updateLegend();
+    });
+  }
+
+  if (marineResourceSource) {
+    marineResourceSource.on("change", function () {
+      if (marineResourceSource.getState() === "ready") updateLegend();
+    });
+  }
+
+  // =========================
+  // INITIAL LOAD
+  // =========================
   setTimeout(function () {
     map.updateSize();
     updateLegend();
@@ -722,6 +914,14 @@ document.addEventListener("DOMContentLoaded", function () {
       zoomToSource(mangroveSource);
     } else if (mpaSource) {
       zoomToSource(mpaSource);
+    } else if (marineResourceSource) {
+      zoomToSource(marineResourceSource);
+    } else if (muniWaterSource) {
+      zoomToSource(muniWaterSource);
+    } else if (settlementsSource) {
+      zoomToSource(settlementsSource);
+    } else if (vulnSource) {
+      zoomToSource(vulnSource);
     }
   }, 700);
 });
