@@ -1,67 +1,253 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Municipal Coastal GIS Portal</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.8.0/ol.css">
-  <link rel="stylesheet" href="../../shared/assets/css/styles.css">
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Coastal Weather & Heat Information Portal - San Teodoro
+  </title>
+
+
+  <!-- OpenLayers -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ol@v10.6.1/ol.css"
+  >
+
+
+  <!-- Shared CSS -->
+
+  <link
+    rel="stylesheet"
+    href="../../shared/css/styles.css"
+  >
+
+
+  <!-- OpenLayers JS -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/ol@v10.6.1/dist/ol.js"
+  ></script>
+
 </head>
+
+
 <body>
-  <header class="header">
+
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+
+  <header class="topbar">
+
     <div class="brand-left">
-      <img id="logo-municipality" class="logo" alt="Municipality logo">
-      <div>
-        <h1 id="site-title">Municipal Coastal GIS Portal</h1>
-        <p id="site-subtitle">OpenLayers + Supabase + KoboToolbox workflow</p>
-      </div>
+
+      <h1>
+        Coastal Weather & Heat Information Portal
+      </h1>
+
+      <p>
+        San Teodoro, Oriental Mindoro
+      </p>
+
     </div>
-    <div class="brand-right">
-      <img id="logo-sponsor1" class="logo" alt="Sponsor logo 1">
-      <img id="logo-sponsor2" class="logo" alt="Sponsor logo 2">
+
+
+    <div class="logo-row">
+
+
+      <!-- SAN TEODORO LOGO -->
+
+      <img
+        src="../../shared/assets/img/logos/santeodoro_logo.jfif"
+        alt="Municipality of San Teodoro"
+        class="logo municipality-logo"
+      >
+
+
+      <!-- ADAPT -->
+
+      <img
+        src="../../shared/assets/img/logos/ADAPT_Document_Banner.png"
+        alt="ADAPT Project"
+        class="logo banner-logo"
+      >
+
+
+      <!-- ADHIKA -->
+
+      <img
+        src="../../shared/assets/img/logos/ADHIKA.png"
+        alt="ADHIKA"
+        class="logo"
+      >
+
     </div>
+
   </header>
 
-  <main class="main">
+
+  <!-- ======================================================
+       PAGE
+       ====================================================== -->
+
+  <div class="page">
+
+
     <aside class="sidebar">
-      <section class="panel">
-        <h2>Map controls</h2>
-        <p class="muted">Each municipality has its own site but all use one database.</p>
-        <button id="zoom-muni">Zoom to municipality</button>
-        <button id="export-map" class="secondary">Export current map as JPEG</button>
-      </section>
 
-      <section class="panel">
-        <h3>Layer toggles</h3>
-        <div id="layer-toggles"></div>
-      </section>
 
-      <section class="panel">
-        <h3>Legend</h3>
-        <div id="legend"></div>
-      </section>
+      <!-- COASTAL MAP LAYERS -->
 
-      <section class="panel">
-        <h3>How Kobo connects</h3>
-        <div class="footer-note">
-          KoboToolbox sends each approved submission to the webhook/Edge Function. The function writes the record into Supabase Postgres. This map then reads the same database through a secured RPC endpoint.
+      <div class="panel-card">
+
+        <h3>
+          Coastal Map Layers
+        </h3>
+
+        <div id="layerControls"></div>
+
+      </div>
+
+
+      <!-- BASEMAP -->
+
+      <div class="panel-card">
+
+        <h3>
+          Basemap
+        </h3>
+
+        <select
+          id="basemapSelect"
+          class="widget-select"
+        >
+
+          <option
+            value="osm"
+            selected
+          >
+            OpenStreetMap
+          </option>
+
+          <option value="topo">
+            Topographic
+          </option>
+
+          <option value="satellite">
+            Satellite
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- CURRENT WEATHER -->
+
+      <div class="panel-card">
+
+        <h3>
+          Current Weather
+        </h3>
+
+        <div
+          id="weatherBox"
+          class="widget-box"
+        >
+          Loading weather...
         </div>
-      </section>
+
+      </div>
+
+
+      <!-- EXPORT -->
+
+      <div class="panel-card">
+
+        <h3>
+          Export Map
+        </h3>
+
+        <button
+          id="exportMapBtn"
+          class="action-btn"
+        >
+          Export as JPEG
+        </button>
+
+      </div>
+
+
+      <!-- LEGEND -->
+
+      <div class="panel-card">
+
+        <h3>
+          Coastal Map Legend
+        </h3>
+
+        <div
+          id="legendBox"
+          class="legend-list"
+        >
+          Loading legend...
+        </div>
+
+      </div>
+
     </aside>
 
-    <section id="map-wrap">
-      <div id="map"></div>
-      <div class="coord-box"><strong>Pointer:</strong> <span id="coords">Move cursor on map</span></div>
-      <div class="weather-box">
-        <h3>Daily weather</h3>
-        <div id="weather-content" class="muted">Loading weather...</div>
-      </div>
-    </section>
-  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/ol@v10.8.0/dist/ol.js"></script>
-  <script src="./config.js"></script>
-  <script src="../../shared/assets/js/weather.js"></script>
-  <script src="../../shared/assets/js/app.js"></script>
+    <!-- ====================================================
+         MAP
+         ==================================================== -->
+
+    <main class="map-wrap">
+
+      <button
+        id="menuBtn"
+        class="mobile-menu-btn"
+        aria-label="Open map tools"
+      >
+        ☰
+      </button>
+
+
+      <div id="map"></div>
+
+
+      <div
+        id="popup"
+        class="map-popup"
+        style="display:none;"
+      ></div>
+
+    </main>
+
+  </div>
+
+
+  <!-- ======================================================
+       SCRIPT ORDER
+       ====================================================== -->
+
+  <script src="config.js"></script>
+
+  <script src="../../shared/js/app.js"></script>
+
+  <script src="../../shared/js/weather.js"></script>
+
+
 </body>
+
 </html>

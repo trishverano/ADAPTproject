@@ -1,95 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Municipal Coastal GIS Portal - Sablayan</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.6.1/ol.css">
-  <link rel="stylesheet" href="../../shared/css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/ol@v10.6.1/dist/ol.js"></script>
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Coastal Weather & Heat Information Portal - Sablayan
+  </title>
+
+  <!-- OpenLayers -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ol@v10.6.1/ol.css"
+  >
+
+  <!-- Shared CSS -->
+  <link
+    rel="stylesheet"
+    href="../../shared/css/styles.css"
+  >
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/ol@v10.6.1/dist/ol.js">
+  </script>
+
 </head>
+
+
 <body>
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+
   <header class="topbar">
+
     <div class="brand-left">
-      <h1>Municipal Coastal GIS Portal</h1>
-      <p>Sablayan, Occidental Mindoro</p>
+
+      <h1>
+        Coastal Weather & Heat Information Portal
+      </h1>
+
+      <p>
+        Sablayan, Occidental Mindoro
+      </p>
+
     </div>
+
 
     <div class="logo-row">
-      <img src="../../shared/assets/img/logos/sablayan_logo.jfif" alt="Sablayan logo" class="logo">
-      <img src="../../shared/assets/img/logos/ADAPT_Document_Banner.png" alt="Project logo" class="logo banner-logo">
-      <img src="../../shared/assets/img/logos/ADHIKA.png" alt="Adhika logo" class="logo">
+
+      <img
+        src="../../shared/assets/img/logos/sablayan_logo.jfif"
+        alt="Municipality of Sablayan"
+        class="logo"
+      >
+
+      <img
+        src="../../shared/assets/img/logos/ADAPT_Document_Banner.png"
+        alt="ADAPT Project"
+        class="logo banner-logo"
+      >
+
+      <img
+        src="../../shared/assets/img/logos/ADHIKA.png"
+        alt="ADHIKA"
+        class="logo"
+      >
+
     </div>
+
   </header>
 
+
+  <!-- ======================================================
+       MAIN PAGE
+       ====================================================== -->
+
   <div class="page">
+
+
+    <!-- ====================================================
+         SIDEBAR
+         ==================================================== -->
+
     <aside class="sidebar">
+
+
+      <!-- COASTAL MAP DATA -->
+
       <div class="panel-card">
-        <h3>Layers</h3>
 
-        <div class="switch-row">
-          <span>Mangroves</span>
-          <label class="switch">
-            <input type="checkbox" id="layerMangrove" checked>
-            <span class="slider"></span>
-          </label>
-        </div>
+        <h3>
+          Coastal Map Layers
+        </h3>
 
-        <div class="switch-row">
-          <span>MPA</span>
-          <label class="switch">
-            <input type="checkbox" id="layerMPA" checked>
-            <span class="slider"></span>
-          </label>
-        </div>
+        <!--
+          app.js automatically creates
+          Sablayan's available layer switches here.
+        -->
+
+        <div id="layerControls"></div>
+
       </div>
 
+
+      <!-- BASEMAP -->
+
       <div class="panel-card">
-        <h3>Basemap</h3>
-        <select id="basemapSelect" class="widget-select">
-          <option value="light" selected>Light Map</option>
-          <option value="osm">OpenStreetMap</option>
-          <option value="topo">Topographic</option>
-          <option value="satellite">Satellite</option>
+
+        <h3>
+          Basemap
+        </h3>
+
+        <select
+          id="basemapSelect"
+          class="widget-select"
+        >
+
+          <option
+            value="osm"
+            selected
+          >
+            OpenStreetMap
+          </option>
+
+          <option value="topo">
+            Topographic
+          </option>
+
+          <option value="satellite">
+            Satellite
+          </option>
+
         </select>
+
       </div>
 
-      <div class="panel-card">
-        <h3>Weather / Heat</h3>
-        <div id="weatherBox" class="widget-box">Loading weather...</div>
-      </div>
+
+      <!-- CURRENT WEATHER -->
 
       <div class="panel-card">
-        <h3>Export Map</h3>
-        <button id="exportMapBtn" class="action-btn">Export as JPEG</button>
+
+        <h3>
+          Current Weather
+        </h3>
+
+        <div
+          id="weatherBox"
+          class="widget-box"
+        >
+          Loading weather...
+        </div>
+
       </div>
 
+
+      <!-- EXPORT -->
+
       <div class="panel-card">
-        <h3>Legend</h3>
-        <div id="legendBox" class="legend-list">Loading legend...</div>
+
+        <h3>
+          Export Map
+        </h3>
+
+        <button
+          id="exportMapBtn"
+          class="action-btn"
+        >
+          Export as JPEG
+        </button>
+
       </div>
+
+
+      <!-- COASTAL GIS LEGEND -->
+
+      <div class="panel-card">
+
+        <h3>
+          Coastal Map Legend
+        </h3>
+
+        <div
+          id="legendBox"
+          class="legend-list"
+        >
+          Loading legend...
+        </div>
+
+      </div>
+
     </aside>
 
+
+    <!-- ====================================================
+         MAP
+         ==================================================== -->
+
     <main class="map-wrap">
-      <button id="menuBtn" class="mobile-menu-btn">☰</button>
+
+      <button
+        id="menuBtn"
+        class="mobile-menu-btn"
+        aria-label="Open map tools"
+      >
+        ☰
+      </button>
+
       <div id="map"></div>
-      <div id="popup" class="map-popup" style="display:none;"></div>
+
+      <div
+        id="popup"
+        class="map-popup"
+        style="display:none;"
+      >
+      </div>
+
     </main>
+
   </div>
 
-  <script src="config.js"></script>
-  <script src="../../shared/js/app.js"></script>
-  <script src="../../shared/js/weather.js"></script>
-  <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const sidebar = document.querySelector(".sidebar");
 
-    if (menuBtn && sidebar) {
-      menuBtn.addEventListener("click", function () {
-        sidebar.classList.toggle("active");
-      });
-    }
-  </script>
+  <!-- ======================================================
+       SABLAYAN CONFIG
+       ====================================================== -->
+
+  <script src="config.js"></script>
+
+
+  <!-- ======================================================
+       SHARED APPLICATION
+       ====================================================== -->
+
+  <script src="../../shared/js/app.js"></script>
+
+  <script src="../../shared/js/weather.js"></script>
+
+
 </body>
+
 </html>

@@ -1,14 +1,21 @@
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
+  width: 100%;
   height: 100%;
   font-family: Arial, sans-serif;
   background: #f4f7fb;
   color: #1f2937;
+  overflow: hidden;
 }
 
 body {
@@ -16,20 +23,34 @@ body {
   flex-direction: column;
 }
 
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 .topbar {
+  flex: 0 0 auto;
+
   min-height: 90px;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
   gap: 16px;
+
   padding: 12px 20px;
+
   background: #0f4c81;
   color: white;
+
+  z-index: 1500;
 }
 
 .topbar h1 {
   margin: 0;
   font-size: 26px;
+  line-height: 1.15;
 }
 
 .topbar p {
@@ -39,23 +60,29 @@ body {
 
 .brand-left {
   min-width: 0;
+  flex: 1;
 }
 
 .logo-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
   justify-content: flex-end;
+
+  gap: 10px;
 }
 
 .logo {
   height: 52px;
   width: auto;
+
   max-width: 170px;
+
   object-fit: contain;
+
   background: white;
+
   padding: 4px;
+
   border-radius: 8px;
 }
 
@@ -64,81 +91,259 @@ body {
   height: 44px;
 }
 
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
 .page {
+  position: relative;
+
   display: flex;
-  height: calc(100vh - 90px);
+
+  flex: 1 1 auto;
+
+  width: 100%;
+
   min-height: 0;
 }
 
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
 .sidebar {
-  width: 260px;
-  min-width: 260px;
-  background: #f7f9fc;
+  position: relative;
+
+  width: 280px;
+  min-width: 280px;
+
+  height: 100%;
+
   padding: 12px;
+
+  background: #f7f9fc;
+
   border-right: 1px solid #d1d5db;
+
   overflow-y: auto;
-  transition: left 0.25s ease;
+  overflow-x: hidden;
+
+  z-index: 1100;
+
+  transition: transform 0.25s ease;
 }
 
+
+/* Sidebar scrollbar */
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   SIDEBAR PANELS
+   ========================================================= */
+
 .panel-card {
-  background: #ffffff;
-  border: 1px solid #dbe4ee;
-  border-radius: 12px;
-  padding: 12px;
   margin-bottom: 12px;
+
+  padding: 12px;
+
+  background: white;
+
+  border: 1px solid #dbe4ee;
+
+  border-radius: 12px;
 }
 
 .panel-card h3 {
-  margin: 0 0 12px 0;
+  margin: 0 0 12px;
+
   font-size: 17px;
+
   color: #123b63;
 }
 
+
+/* =========================================================
+   COLLAPSIBLE SIDEBAR SECTIONS
+   app.js can use these later
+   ========================================================= */
+
+.panel-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #123b63;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.panel-header-arrow {
+  font-size: 12px;
+
+  transition: transform 0.2s ease;
+}
+
+.panel-card.collapsed .panel-header-arrow {
+  transform: rotate(-90deg);
+}
+
+.panel-content {
+  margin-top: 12px;
+}
+
+.panel-card.collapsed .panel-content {
+  display: none;
+}
+
+
+/* =========================================================
+   LAYER GROUPS
+   ========================================================= */
+
+.layer-group {
+  margin-bottom: 15px;
+}
+
+.layer-group:last-child {
+  margin-bottom: 0;
+}
+
+.layer-group-title {
+  margin: 0 0 8px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.layer-empty-message {
+  padding: 5px 0;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   LAYER TOGGLE ROWS
+   ========================================================= */
+
 .switch-row {
+  min-height: 34px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+
+  gap: 10px;
+
+  margin-bottom: 8px;
+
   font-size: 14px;
-  gap: 8px;
 }
 
 .switch-row:last-child {
   margin-bottom: 0;
 }
 
+.switch-row > span,
+.switch-row-label {
+  min-width: 0;
+
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   SWITCH
+   ========================================================= */
+
 .switch {
   position: relative;
+
   display: inline-block;
+
   width: 42px;
+  min-width: 42px;
+
   height: 24px;
+
   flex: 0 0 auto;
 }
 
 .switch input {
   opacity: 0;
+
   width: 0;
   height: 0;
 }
 
 .slider {
   position: absolute;
+
   inset: 0;
+
   background: #cbd5e1;
+
   border-radius: 24px;
+
   cursor: pointer;
+
   transition: 0.2s;
 }
 
 .slider:before {
   content: "";
+
   position: absolute;
-  width: 18px;
-  height: 18px;
+
   left: 3px;
   top: 3px;
+
+  width: 18px;
+  height: 18px;
+
   background: white;
+
   border-radius: 50%;
+
   transition: 0.2s;
 }
 
@@ -150,6 +355,16 @@ body {
   transform: translateX(18px);
 }
 
+.switch input:disabled + .slider {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   STANDARD CONTROLS
+   ========================================================= */
+
 .widget-select,
 .widget-box,
 .action-btn {
@@ -158,50 +373,121 @@ body {
 
 .widget-select {
   padding: 10px;
+
   border: 1px solid #cbd5e1;
+
   border-radius: 8px;
-  font-size: 14px;
+
   background: white;
+
+  font-size: 14px;
 }
 
 .widget-box {
   padding: 10px;
+
   background: #f8fafc;
+
   border: 1px solid #dbe4ee;
+
   border-radius: 8px;
+
   font-size: 14px;
+
   line-height: 1.5;
 }
 
 .action-btn {
   padding: 10px 12px;
+
   border: none;
+
   border-radius: 8px;
+
   background: #0f4c81;
+
   color: white;
+
   font-size: 14px;
+
   cursor: pointer;
 }
 
+.action-btn:hover {
+  background: #123b63;
+}
+
+
+/* =========================================================
+   WEATHER SIDEBAR
+   ========================================================= */
+
+.weather-location {
+  margin-bottom: 8px;
+
+  font-size: 14px;
+}
+
+.weather-info-row {
+  transition: background 0.15s ease;
+}
+
+.weather-info-row:hover {
+  background: rgba(15, 76, 129, 0.06) !important;
+}
+
+.weather-source {
+  margin-top: 10px;
+
+  font-size: 11px;
+
+  line-height: 1.45;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   GIS LEGEND
+   ========================================================= */
+
 .legend-list {
   font-size: 13px;
+
   line-height: 1.7;
 }
 
 .legend-swatch {
   display: inline-block;
+
   width: 14px;
   height: 14px;
+
   margin-right: 8px;
-  border-radius: 50%;
+
   vertical-align: middle;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+
+/* =========================================================
+   MAP
+   ========================================================= */
+
 .map-wrap {
-  flex: 1;
-  min-width: 0;
-  height: 100%;
   position: relative;
+
+  flex: 1;
+
+  min-width: 0;
+  min-height: 0;
+
+  height: 100%;
+
+  overflow: hidden;
 }
 
 #map {
@@ -209,100 +495,794 @@ body {
   height: 100%;
 }
 
+
+/* =========================================================
+   FEATURE POPUP
+   ========================================================= */
+
 .map-popup {
   position: absolute;
-  bottom: 12px;
+
   left: 12px;
+  bottom: 125px;
+
   min-width: 220px;
   max-width: 300px;
-  background: white;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
+
   padding: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+
+  background: white;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 10px;
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+
   font-size: 13px;
+
   line-height: 1.5;
+
   z-index: 1000;
+
   pointer-events: none;
 }
 
 .map-popup h4 {
-  margin: 0 0 6px 0;
+  margin: 0 0 6px;
+
   font-size: 14px;
+
   color: #123b63;
 }
 
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
 .mobile-menu-btn {
   display: none;
+
   position: absolute;
+
   top: 12px;
   left: 12px;
-  z-index: 1200;
+
+  z-index: 1250;
+
+  padding: 9px 11px;
+
   border: 1px solid #cbd5e1;
-  background: white;
+
   border-radius: 8px;
-  padding: 8px 10px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  font-size: 18px;
+
   cursor: pointer;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+
+/* =========================================================
+   SIDEBAR CLOSE BUTTON
+   Created later by app.js on mobile
+   ========================================================= */
+
+.sidebar-close-btn {
+  display: none;
+
+  position: sticky;
+
+  top: 0;
+
+  width: 100%;
+
+  margin-bottom: 10px;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #123b63;
+
+  color: white;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   MOBILE DARK BACKDROP
+   ========================================================= */
+
+.sidebar-backdrop {
+  display: none;
+
+  position: absolute;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.35);
+
+  z-index: 1050;
+}
+
+.sidebar-backdrop.active {
+  display: block;
+}
+
+
+/* =========================================================
+   WEATHER OVERLAY SELECTOR
+   This will float on the map.
+   ========================================================= */
+
+.weather-overlay-control {
+  position: absolute;
+
+  left: 50%;
+  bottom: 74px;
+
+  transform: translateX(-50%);
+
+  width: min(780px, calc(100% - 40px));
+
+  padding: 7px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  border: 1px solid rgba(0, 0, 0, 0.15);
+
+  border-radius: 12px;
+
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.18);
+
+  z-index: 900;
+
+  backdrop-filter: blur(4px);
+}
+
+
+/* =========================================================
+   WEATHER BUTTON ROW
+   ========================================================= */
+
+.weather-overlay-tabs {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  overflow-x: auto;
+
+  padding-bottom: 2px;
+
+  scrollbar-width: thin;
+}
+
+.weather-overlay-tabs::-webkit-scrollbar {
+  height: 5px;
+}
+
+.weather-overlay-tabs::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 10px;
+}
+
+.weather-overlay-btn {
+  flex: 0 0 auto;
+
+  padding: 7px 10px;
+
+  border: 1px solid #d5dee8;
+
+  border-radius: 7px;
+
+  background: white;
+
+  color: #334155;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition: 0.15s;
+}
+
+.weather-overlay-btn:hover {
+  background: #edf4fa;
+}
+
+.weather-overlay-btn.active {
+  background: #123b63;
+
+  border-color: #123b63;
+
+  color: white;
+}
+
+
+/* =========================================================
+   FLOATING WEATHER LEGEND
+   Zoom Earth-style concept
+   ========================================================= */
+
+.weather-map-legend {
+  position: absolute;
+
+  left: 50%;
+  bottom: 10px;
+
+  transform: translateX(-50%);
+
+  width: min(780px, calc(100% - 40px));
+
+  padding: 8px 10px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  border: 1px solid rgba(0, 0, 0, 0.15);
+
+  border-radius: 10px;
+
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
+
+  z-index: 900;
+
+  backdrop-filter: blur(4px);
+}
+
+.weather-map-legend.hidden {
+  display: none;
+}
+
+
+/* =========================================================
+   WEATHER LEGEND HEADER
+   ========================================================= */
+
+.weather-legend-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: baseline;
+
+  gap: 8px;
+
+  margin-bottom: 6px;
+}
+
+.weather-legend-title {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.weather-legend-subtitle {
+  font-size: 10px;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   COLORED GRADIENT BAR
+   Colors are inserted by app.js
+   ========================================================= */
+
+.weather-gradient-bar {
+  width: 100%;
+
+  height: 14px;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+  border-radius: 5px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   GRADIENT VALUES
+   ========================================================= */
+
+.weather-gradient-labels {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 4px;
+
+  margin-top: 4px;
+
+  font-size: 9px;
+
+  color: #475569;
+}
+
+.weather-gradient-labels span {
+  flex: 1;
+
+  min-width: 0;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   HEAT INDEX COLORED CATEGORIES
+   ========================================================= */
+
+.heat-legend-row {
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+  border-radius: 5px;
+}
+
+.heat-legend-color {
+  height: 14px;
+}
+
+.heat-legend-labels {
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 2px;
+
+  margin-top: 4px;
+
+  font-size: 8px;
+
+  line-height: 1.15;
+
+  color: #475569;
+
+  text-align: center;
+}
+
+.heat-legend-labels strong {
+  display: block;
+
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   CURRENT WEATHER VALUE MARKER
+   ========================================================= */
+
+.weather-current-indicator {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 3px 7px;
+
+  background: #1f2937;
+
+  border-radius: 5px;
+
+  color: white;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   WIND ARROW
+   ========================================================= */
+
+.wind-arrow-label {
+  font-size: 18px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  text-shadow:
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;
+}
+
+
+/* =========================================================
+   OPENLAYERS ATTRIBUTION
+   ========================================================= */
+
+.ol-attribution {
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   TABLETS / MOBILE
+   ========================================================= */
+
 @media (max-width: 900px) {
+
   .topbar {
-    min-height: auto;
-    flex-direction: column;
-    align-items: flex-start;
+    min-height: 62px;
+
+    padding: 8px 10px;
+
+    gap: 8px;
   }
 
+  .topbar h1 {
+    font-size: 18px;
+  }
+
+  .topbar p {
+    font-size: 11px;
+  }
+
+
+  /* Keep logos compact */
+
   .logo-row {
-    justify-content: flex-start;
+    flex-wrap: nowrap;
+
+    gap: 4px;
   }
 
   .logo {
-    height: 38px;
-    max-width: 120px;
+    height: 34px;
+
+    max-width: 80px;
+
+    padding: 2px;
   }
 
   .banner-logo {
-    height: 34px;
-    max-width: 170px;
+    height: 30px;
+
+    max-width: 120px;
   }
 
-  .page {
-    height: calc(100vh - 120px);
-  }
+
+  /* Sidebar becomes slide-out */
 
   .sidebar {
     position: absolute;
+
+    left: 0;
     top: 0;
-    left: -270px;
+
+    width: min(88vw, 340px);
+    min-width: 0;
+
     height: 100%;
-    z-index: 1100;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+
+    transform: translateX(-105%);
+
+    padding: 10px;
+
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.22);
+
+    z-index: 1150;
   }
 
   .sidebar.active {
-    left: 0;
+    transform: translateX(0);
   }
 
   .mobile-menu-btn {
     display: block;
   }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+
+
+  /* Larger tap targets */
+
+  .switch-row {
+    min-height: 40px;
+  }
+
+  .switch {
+    width: 46px;
+    min-width: 46px;
+
+    height: 26px;
+  }
+
+  .slider:before {
+    width: 20px;
+    height: 20px;
+  }
+
+  .switch input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+
+
+  /* Weather controls */
+
+  .weather-overlay-control {
+    width: calc(100% - 24px);
+
+    bottom: 68px;
+
+    padding: 6px;
+  }
+
+  .weather-overlay-btn {
+    padding: 7px 9px;
+
+    font-size: 11px;
+  }
+
+
+  /* Weather legend */
+
+  .weather-map-legend {
+    width: calc(100% - 24px);
+
+    bottom: 8px;
+
+    padding: 6px 8px;
+  }
+
+  .weather-gradient-bar {
+    height: 12px;
+  }
+
+  .weather-gradient-labels {
+    font-size: 8px;
+  }
+
+  .weather-legend-title {
+    font-size: 11px;
+  }
+
+  .weather-legend-subtitle {
+    font-size: 9px;
+  }
+
+
+  .map-popup {
+    bottom: 125px;
+
+    max-width: 260px;
+  }
 }
 
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
 @media (max-width: 600px) {
+
+  .topbar {
+    min-height: 56px;
+
+    padding: 6px 8px;
+  }
+
   .topbar h1 {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .topbar p {
-    font-size: 12px;
+    font-size: 10px;
   }
 
-  .page {
-    height: calc(100vh - 110px);
+
+  .logo {
+    height: 27px;
+
+    max-width: 55px;
   }
+
+  .banner-logo {
+    height: 25px;
+
+    max-width: 85px;
+  }
+
+
+  .panel-card {
+    padding: 10px;
+
+    margin-bottom: 9px;
+  }
+
+  .panel-card h3 {
+    font-size: 16px;
+  }
+
+
+  /* Weather control stays horizontally scrollable */
+
+  .weather-overlay-control {
+    width: calc(100% - 16px);
+
+    bottom: 64px;
+
+    padding: 5px;
+  }
+
+  .weather-overlay-tabs {
+    gap: 4px;
+  }
+
+  .weather-overlay-btn {
+    padding: 6px 8px;
+
+    font-size: 10px;
+  }
+
+
+  /* Compact weather legend */
+
+  .weather-map-legend {
+    width: calc(100% - 16px);
+
+    bottom: 5px;
+
+    padding: 5px 6px;
+  }
+
+  .weather-gradient-bar {
+    height: 10px;
+  }
+
+  .weather-gradient-labels {
+    font-size: 7px;
+  }
+
+  .weather-legend-header {
+    margin-bottom: 4px;
+  }
+
+
+  .heat-legend-labels {
+    font-size: 7px;
+  }
+
+  .heat-legend-labels strong {
+    font-size: 7px;
+  }
+
 
   .map-popup {
-    max-width: 240px;
-    font-size: 12px;
+    left: 8px;
+
+    bottom: 120px;
+
+    min-width: 190px;
+
+    max-width: calc(100% - 16px);
+
+    padding: 9px;
+
+    font-size: 11px;
   }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .sidebar {
+    width: 92vw;
+  }
+
+  .topbar h1 {
+    font-size: 13px;
+  }
+
+  .logo {
+    height: 24px;
+
+    max-width: 45px;
+  }
+
+  .banner-logo {
+    max-width: 70px;
+  }
+
+  .switch-row {
+    font-size: 13px;
+  }
+
+
+  /* Allow long legend labels to scroll */
+
+  .weather-gradient-labels {
+    justify-content: flex-start;
+
+    gap: 12px;
+
+    overflow-x: auto;
+  }
+
+  .weather-gradient-labels span {
+    flex: 0 0 auto;
+  }
+}
+
+/* ==========================================================
+   MUNICIPALITY LOGO
+   Clips oversized / uneven municipal logos into one
+   consistent header box.
+   ========================================================== */
+
+.municipality-logo {
+  width: 64px;
+  height: 64px;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  overflow: hidden;
+
+  flex: 0 0 64px;
+}
+
+/* ==========================================================
+   MUNICIPALITY LOGOS
+   ========================================================== */
+
+.municipality-logo {
+  width: 64px !important;
+  height: 64px !important;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: #ffffff;
+
+  padding: 4px;
+
+  border-radius: 10px;
+
+  box-sizing: border-box;
+
+  flex: 0 0 64px;
 }

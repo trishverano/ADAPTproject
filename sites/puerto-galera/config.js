@@ -1,19 +1,337 @@
-window.APP_CONFIG = {
-  supabaseUrl: 'https://YOUR-PROJECT.supabase.co',
-  supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY',
-  municipalitySlug: 'puerto-galera',
-  municipalityName: 'Puerto Galera, Oriental Mindoro',
-  center: [120.955, 13.502],
-  zoom: 13,
-  extent4326: [120.88, 13.44, 121.04, 13.57],
-  logos: { municipality: '../../shared/assets/img/logos/puerto-galera-logo.png', sponsor1: '../../shared/assets/img/logos/pfpi-logo.png', sponsor2: '../../shared/assets/img/logos/sponsor-2.png' },
-  weather: { latitude: 13.502, longitude: 120.955, label: 'Puerto Galera' },
+window.CONFIG = {
+
+  municipality:
+    "Puerto Galera",
+
+  province:
+    "Oriental Mindoro",
+
+
+  // =========================================================
+  // INITIAL MAP VIEW
+  // =========================================================
+
+  center: [
+    120.95,
+    13.50
+  ],
+
+  zoom:
+    10,
+
+
+  // =========================================================
+  // CURRENT WEATHER
+  // =========================================================
+
+  weatherLat:
+    13.50,
+
+  weatherLon:
+    120.95,
+
+  weather: {
+
+    lat:
+      13.50,
+
+    lon:
+      120.95,
+
+    label:
+      "Puerto Galera, Oriental Mindoro"
+
+  },
+
+
+  // =========================================================
+  // WEATHER OVERLAY
+  // =========================================================
+
+  weatherOverlay: {
+
+    default:
+      "temperature",
+
+    columns:
+      10,
+
+    rows:
+      10,
+
+    bufferFactor:
+      0.25,
+
+    maxLonSpan:
+      3.0,
+
+    maxLatSpan:
+      2.2,
+
+    rasterWidth:
+      320
+
+  },
+
+
+  // =========================================================
+  // MAP LAYERS
+  // =========================================================
+
   layers: [
-    { key: 'barangays', label: 'Barangay Boundary', color: '#1d4ed8', visible: true },
-    { key: 'built_up', label: 'Built-up / Settlements', color: '#ef4444', visible: true },
-    { key: 'mangroves', label: 'Mangroves', color: '#16a34a', visible: true },
-    { key: 'wma_zones', label: 'WMA / Zoning', color: '#f59e0b', visible: true },
-    { key: 'pwd_points', label: 'PWD / Inclusion Points', color: '#7c3aed', visible: false },
-    { key: 'kobo_submissions', label: 'Kobo Field Submissions', color: '#0f766e', visible: true }
+
+
+    // -------------------------------------------------------
+    // COASTAL & MARINE
+    // -------------------------------------------------------
+
+    {
+
+      id:
+        "mangrove",
+
+      label:
+        "Mangroves",
+
+      group:
+        "Coastal & Marine",
+
+      url:
+        "../../shared/data/puertogalera_mangrove.geojson",
+
+      kind:
+        "mangrove",
+
+      visible:
+        true
+
+    },
+
+
+    {
+
+      id:
+        "marineZones",
+
+      label:
+        "Management Zones",
+
+      group:
+        "Coastal & Marine",
+
+      url:
+        "../../shared/data/puertogalera_marinezones.geojson",
+
+      kind:
+        "categorized",
+
+      categoryField:
+        "Mgt_Zones",
+
+      popupFields: [
+
+        {
+          field:
+            "Mgt_Zones",
+
+          label:
+            "Management Zone"
+        }
+
+      ],
+
+      visible:
+        true
+
+    },
+
+
+    // -------------------------------------------------------
+    // BOUNDARIES
+    // -------------------------------------------------------
+
+    {
+
+      id:
+        "muniWater",
+
+      label:
+        "Municipal Water Extent",
+
+      group:
+        "Boundaries",
+
+      url:
+        "../../shared/data/puertogalera_muniwaterLine.geojson",
+
+      kind:
+        "muniWater",
+
+      color:
+        "#004aad",
+
+      visible:
+        true
+
+    },
+
+
+    {
+
+      id:
+        "municipalBoundary",
+
+      label:
+        "Municipal Boundary",
+
+      group:
+        "Boundaries",
+
+      url:
+        "../../shared/data/puertogalera_muniboundary.geojson",
+
+      kind:
+        "municipalBoundary",
+
+      width:
+        1,
+
+      visible:
+        true
+
+    },
+
+
+    // -------------------------------------------------------
+    // COMMUNITY
+    // -------------------------------------------------------
+
+    {
+
+      id:
+        "settlements",
+
+      label:
+        "Settlements",
+
+      group:
+        "Community",
+
+      url:
+        "../../shared/data/puertogalera_settlements.geojson",
+
+      kind:
+        "settlements",
+
+      popupFields: [
+
+        {
+          field:
+            "Name",
+
+          label:
+            "Settlement Name"
+        }
+
+      ],
+
+      visible:
+        false
+
+    },
+
+
+    // -------------------------------------------------------
+    // DISABILITY TYPES
+    // Exact Puerto Galera field = Type of Di
+    // -------------------------------------------------------
+
+    {
+
+      id:
+        "vulnDis",
+
+      label:
+        "Disability Types",
+
+      group:
+        "Community",
+
+      url:
+        "../../shared/data/puertogalera_vuln.geojson",
+
+      kind:
+        "disability",
+
+      categoryField:
+        "Type of Di",
+
+      popupFields: [
+
+        {
+          field:
+            "Type of Di",
+
+          label:
+            "Disability Type"
+        }
+
+      ],
+
+      visible:
+        false,
+
+      exclusiveGroup:
+        "puertoGaleraVulnerability"
+
+    },
+
+
+    // -------------------------------------------------------
+    // VULNERABILITY TYPES
+    // Exact Puerto Galera field = Type of Vu
+    // -------------------------------------------------------
+
+    {
+
+      id:
+        "vulnType",
+
+      label:
+        "Vulnerability Types",
+
+      group:
+        "Community",
+
+      url:
+        "../../shared/data/puertogalera_vuln.geojson",
+
+      kind:
+        "vulnerability",
+
+      categoryField:
+        "Type of Vu",
+
+      popupFields: [
+
+        {
+          field:
+            "Type of Vu",
+
+          label:
+            "Vulnerability Type"
+        }
+
+      ],
+
+      visible:
+        false,
+
+      exclusiveGroup:
+        "puertoGaleraVulnerability"
+
+    }
+
   ]
+
 };

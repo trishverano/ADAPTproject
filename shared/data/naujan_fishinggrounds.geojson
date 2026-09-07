@@ -1,0 +1,24 @@
+{
+"type": "FeatureCollection",
+"name": "naujan_fishinggrounds",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "layer": "Damulag", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Damulag.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.341071052143718, 13.375695342719222 ] } },
+{ "type": "Feature", "properties": { "id": 2, "layer": "Damulag", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Damulag.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.361893948054941, 13.338479954282144 ] } },
+{ "type": "Feature", "properties": { "id": 3, "layer": "Damulag", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Damulag.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.380944682612053, 13.328954587003604 ] } },
+{ "type": "Feature", "properties": { "id": 5, "layer": "Damulag", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Damulag.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.393307954080854, 13.329656225440207 ] } },
+{ "type": "Feature", "properties": { "id": 7, "layer": "Damulag", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Damulag.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.395000878049416, 13.316206885023307 ] } },
+{ "type": "Feature", "properties": { "id": 8, "layer": "Damulag", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Damulag.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.416914838309111, 13.308306573170023 ] } },
+{ "type": "Feature", "properties": { "id": 1, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.325075349182555, 13.325001503849727 ] } },
+{ "type": "Feature", "properties": { "id": 2, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.344962322378649, 13.315348762473862 ] } },
+{ "type": "Feature", "properties": { "id": 2, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.324300028590145, 13.375474874417511 ] } },
+{ "type": "Feature", "properties": { "id": 3, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.342287466334724, 13.3526804489998 ] } },
+{ "type": "Feature", "properties": { "id": 6, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.353297018747369, 13.331746793003944 ] } },
+{ "type": "Feature", "properties": { "id": 6, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.364926827633951, 13.323063202368626 ] } },
+{ "type": "Feature", "properties": { "id": 7, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.373765482387753, 13.316550509392137 ] } },
+{ "type": "Feature", "properties": { "id": 8, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.385085163037374, 13.308332111112282 ] } },
+{ "type": "Feature", "properties": { "id": 10, "layer": "Gillnet", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Gillnet.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.394699138383615, 13.308177046993794 ] } },
+{ "type": "Feature", "properties": { "id": 1, "layer": "Kawil", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Kawil.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.364246092620533, 13.424554019011197 ] } },
+{ "type": "Feature", "properties": { "id": 2, "layer": "Kawil", "path": "D:\\Projects\\PATH\\Naujan\\Final_shapefiles\\Fishing Grounds_points\\Kawil.shp" }, "geometry": { "type": "Point", "coordinates": [ 121.384373077580122, 13.40931770329415 ] } }
+]
+}

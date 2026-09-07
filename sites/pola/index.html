@@ -1,134 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Municipal Coastal GIS Portal - Pola</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.6.1/ol.css">
-  <link rel="stylesheet" href="../../shared/css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/ol@v10.6.1/dist/ol.js"></script>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Coastal Weather & Heat Information Portal - Pola
+  </title>
+
+  <!-- OpenLayers -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ol@v10.6.1/ol.css"
+  />
+
+  <!-- Shared project styles -->
+  <link
+    rel="stylesheet"
+    href="../../shared/css/styles.css"
+  />
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/ol@v10.6.1/dist/ol.js">
+  </script>
 </head>
+
+
 <body>
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+
   <header class="topbar">
+
     <div class="brand-left">
-      <h1>Municipal Coastal GIS Portal</h1>
-      <p>Pola, Oriental Mindoro</p>
+
+      <h1>
+        Coastal Weather & Heat Information Portal
+      </h1>
+
+      <p>
+        Pola, Oriental Mindoro
+      </p>
+
     </div>
+
 
     <div class="logo-row">
-      <img src="../../shared/assets/img/logos/Pola_flag.png" alt="Municipality logo" class="logo">
-      <img src="../../shared/assets/img/logos/ADAPT_Document_Banner.png" alt="Project logo" class="logo banner-logo">
-      <img src="../../shared/assets/img/logos/ADHIKA.png" alt="Adhika logo" class="logo">
+
+      <img
+        src="../../shared/assets/img/logos/Pola_flag.png"
+        alt="Municipality of Pola"
+        class="logo"
+      />
+
+      <img
+        src="../../shared/assets/img/logos/ADAPT_Document_Banner.png"
+        alt="ADAPT Project"
+        class="logo banner-logo"
+      />
+
+      <img
+        src="../../shared/assets/img/logos/ADHIKA.png"
+        alt="ADHIKA"
+        class="logo"
+      />
+
     </div>
+
   </header>
 
+
+  <!-- ======================================================
+       MAIN PAGE
+       ====================================================== -->
+
   <div class="page">
+
+
+    <!-- ====================================================
+         SIDEBAR
+         ==================================================== -->
+
     <aside class="sidebar">
+
+
+      <!-- ==================================================
+           COASTAL MAP LAYERS
+           These are supporting information.
+           ================================================== -->
+
       <div class="panel-card">
-        <h3>Layers</h3>
+
+        <h3>
+          Coastal Map Layers
+        </h3>
+
 
         <div class="switch-row">
-          <span>Mangroves</span>
+
+          <span>
+            Mangroves
+          </span>
+
           <label class="switch">
-            <input type="checkbox" id="layerMangrove" checked>
+
+            <input
+              type="checkbox"
+              id="layerMangrove"
+              checked
+            />
+
             <span class="slider"></span>
+
           </label>
+
         </div>
 
-        <div class="switch-row">
-          <span>MPA</span>
-          <label class="switch">
-            <input type="checkbox" id="layerMPA" checked>
-            <span class="slider"></span>
-          </label>
-        </div>
 
         <div class="switch-row">
-          <span>Marine Resource</span>
+
+          <span>
+            Marine Protected Areas
+          </span>
+
           <label class="switch">
-            <input type="checkbox" id="layerMarineResource" checked>
+
+            <input
+              type="checkbox"
+              id="layerMPA"
+              checked
+            />
+
             <span class="slider"></span>
+
           </label>
+
         </div>
 
-        <div class="switch-row">
-          <span>Municipal Water Extent</span>
-          <label class="switch">
-            <input type="checkbox" id="layerMuniWater" checked>
-            <span class="slider"></span>
-          </label>
-        </div>
 
         <div class="switch-row">
-          <span>Settlements</span>
+
+          <span>
+            Marine Resources
+          </span>
+
           <label class="switch">
-            <input type="checkbox" id="layerSettlements">
+
+            <input
+              type="checkbox"
+              id="layerMarineResource"
+              checked
+            />
+
             <span class="slider"></span>
+
           </label>
+
         </div>
 
-        <div class="switch-row">
-          <span>Disability Types</span>
-          <label class="switch">
-            <input type="checkbox" id="layerVulnDis">
-            <span class="slider"></span>
-          </label>
-        </div>
 
         <div class="switch-row">
-          <span>Vulnerability Types</span>
+
+          <span>
+            Municipal Water Extent
+          </span>
+
           <label class="switch">
-            <input type="checkbox" id="layerVulnType">
+
+            <input
+              type="checkbox"
+              id="layerMuniWater"
+              checked
+            />
+
             <span class="slider"></span>
+
           </label>
+
         </div>
+
+
+        <div class="switch-row">
+
+          <span>
+            Settlements
+          </span>
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="layerSettlements"
+            />
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
+
+        <div class="switch-row">
+
+          <span>
+            Disability Types
+          </span>
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="layerVulnDis"
+            />
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
+
+        <div class="switch-row">
+
+          <span>
+            Vulnerability Types
+          </span>
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="layerVulnType"
+            />
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
       </div>
 
+
+      <!-- ==================================================
+           BASEMAP
+           ================================================== -->
+
       <div class="panel-card">
-        <h3>Basemap</h3>
-        <select id="basemapSelect" class="widget-select">
-          <option value="light" selected>Light Map</option>
-          <option value="osm">OpenStreetMap</option>
-          <option value="topo">Topographic</option>
-          <option value="satellite">Satellite</option>
+
+        <h3>
+          Basemap
+        </h3>
+
+        <select
+          id="basemapSelect"
+          class="widget-select"
+        >
+
+          <option
+            value="osm"
+            selected
+          >
+            OpenStreetMap
+          </option>
+
+          <option value="topo">
+            Topographic
+          </option>
+
+          <option value="satellite">
+            Satellite
+          </option>
+
         </select>
+
       </div>
 
-      <div class="panel-card">
-        <h3>Weather / Heat</h3>
-        <div id="weatherBox" class="widget-box">Loading weather...</div>
-      </div>
+
+      <!-- ==================================================
+           CURRENT WEATHER
+           ================================================== -->
 
       <div class="panel-card">
-        <h3>Export Map</h3>
-        <button id="exportMapBtn" class="action-btn">Export as JPEG</button>
+
+        <h3>
+          Current Weather
+        </h3>
+
+        <div
+          id="weatherBox"
+          class="widget-box"
+        >
+          Loading weather...
+        </div>
+
       </div>
 
+
+      <!-- ==================================================
+           EXPORT
+           ================================================== -->
+
       <div class="panel-card">
-        <h3>Legend</h3>
-        <div id="legendBox" class="legend-list">Loading legend...</div>
+
+        <h3>
+          Export Map
+        </h3>
+
+        <button
+          id="exportMapBtn"
+          class="action-btn"
+        >
+          Export as JPEG
+        </button>
+
       </div>
+
+
+      <!-- ==================================================
+           GIS LEGEND
+           ================================================== -->
+
+      <div class="panel-card">
+
+        <h3>
+          Coastal Map Legend
+        </h3>
+
+        <div
+          id="legendBox"
+          class="legend-list"
+        >
+          Loading legend...
+        </div>
+
+      </div>
+
     </aside>
 
+
+    <!-- ====================================================
+         MAP
+         ==================================================== -->
+
     <main class="map-wrap">
-      <button id="menuBtn" class="mobile-menu-btn">☰</button>
+
+
+      <!-- Mobile menu -->
+
+      <button
+        id="menuBtn"
+        class="mobile-menu-btn"
+        aria-label="Open map tools"
+      >
+        ☰
+      </button>
+
+
+      <!-- OpenLayers map -->
+
       <div id="map"></div>
-      <div id="popup" class="map-popup" style="display:none;"></div>
+
+
+      <!-- Feature information -->
+
+      <div
+        id="popup"
+        class="map-popup"
+        style="display:none;"
+      >
+      </div>
+
+
+      <!--
+        The next app.js will automatically place these here:
+
+        WEATHER MAP CONTROL
+
+        Off
+        Temperature
+        Relative Humidity
+        Heat Index
+        Precipitation
+        Wind
+
+        +
+
+        COLORED WEATHER LEGEND
+
+        similar in concept to the Zoom Earth legend.
+      -->
+
     </main>
+
   </div>
 
+
+  <!-- ======================================================
+       MUNICIPALITY CONFIGURATION
+       ====================================================== -->
+
   <script src="config.js"></script>
+
+
+  <!-- ======================================================
+       SHARED MAP ENGINE
+       ====================================================== -->
+
   <script src="../../shared/js/app.js"></script>
+
+
+  <!-- ======================================================
+       SHARED WEATHER ENGINE
+       ====================================================== -->
+
   <script src="../../shared/js/weather.js"></script>
+
+
+  <!-- ======================================================
+       MOBILE SIDEBAR
+       ====================================================== -->
+
   <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const sidebar = document.querySelector(".sidebar");
-    if (menuBtn && sidebar) {
-      menuBtn.addEventListener("click", function () {
-        sidebar.classList.toggle("active");
-      });
+
+    const menuBtn =
+      document.getElementById("menuBtn");
+
+    const sidebar =
+      document.querySelector(".sidebar");
+
+
+    if (
+      menuBtn &&
+      sidebar
+    ) {
+
+      menuBtn.addEventListener(
+        "click",
+        function () {
+
+          sidebar.classList.toggle(
+            "active"
+          );
+
+        }
+      );
+
     }
+
   </script>
+
 </body>
+
 </html>
