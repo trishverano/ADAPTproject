@@ -635,7 +635,7 @@ input {
 
 .sidebar::after {
   content:
-    "WebGIS developed by\A Patricia Natividad M. Verano\A GIS Specialist\A trishverano@gmail.com";
+    "WebGIS developed by\A Patricia Natividad M. Verano\A GIS & Spatial Systems Specialist\A trishverano@gmail.com";
 
   display: block;
 
@@ -1542,6 +1542,118 @@ input {
       4px 8px;
 
     font-size: 9px;
+  }
+
+}
+
+/* =========================================================
+   UNIVERSAL MUNICIPALITY LOGO FIX
+   Works even when older index.html files do not use
+   the municipality-logo class.
+   ========================================================= */
+
+/* First logo in the logo row = municipality logo */
+.logo-row > img:first-child:not(.banner-logo) {
+  width: 64px !important;
+  height: 64px !important;
+
+  max-width: 64px !important;
+  max-height: 64px !important;
+
+  min-width: 64px !important;
+  min-height: 64px !important;
+
+  object-fit: contain !important;
+  object-position: center !important;
+
+  padding: 1px !important;
+
+  background: #ffffff;
+
+  border-radius: 10px;
+
+  flex: 0 0 64px !important;
+}
+
+
+/* Keep the project banner large */
+.logo-row .banner-logo {
+  width: 420px !important;
+  height: 68px !important;
+
+  max-width: 48vw !important;
+  max-height: 68px !important;
+
+  object-fit: contain !important;
+  object-position: center !important;
+
+  padding: 1px 2px !important;
+
+  background: #ffffff;
+
+  border-radius: 9px;
+}
+
+
+/* ADHIKA remains removed */
+.logo-row img[alt="ADHIKA"] {
+  display: none !important;
+}
+
+
+/* Tablet */
+@media (max-width: 900px) {
+
+  .logo-row > img:first-child:not(.banner-logo) {
+    width: 52px !important;
+    height: 52px !important;
+
+    min-width: 52px !important;
+    min-height: 52px !important;
+
+    max-width: 52px !important;
+    max-height: 52px !important;
+
+    flex-basis: 52px !important;
+  }
+
+
+  .logo-row .banner-logo {
+    width: 280px !important;
+    height: 54px !important;
+
+    max-width: 52vw !important;
+    max-height: 54px !important;
+  }
+
+}
+
+
+/* Phone */
+@media (max-width: 600px) {
+
+  .logo-row > img:first-child:not(.banner-logo) {
+    width: 40px !important;
+    height: 40px !important;
+
+    min-width: 40px !important;
+    min-height: 40px !important;
+
+    max-width: 40px !important;
+    max-height: 40px !important;
+
+    flex-basis: 40px !important;
+
+    padding: 0 !important;
+  }
+
+
+  .logo-row .banner-logo {
+    width: 205px !important;
+    height: 46px !important;
+
+    max-width: 59vw !important;
+    max-height: 46px !important;
   }
 
 }
