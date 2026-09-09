@@ -1,5 +1,11 @@
 /* =========================================================
-   GLOBAL
+   PATH COASTAL WEATHER & HEAT INFORMATION PORTAL
+   SHARED STYLESHEET
+   ========================================================= */
+
+
+/* =========================================================
+   RESET
    ========================================================= */
 
 * {
@@ -12,56 +18,80 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #1f2937;
-  overflow: hidden;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color: #172033;
+  background: #f5f7fa;
+
+  overflow: hidden;
+}
+
+button,
+select,
+input {
+  font: inherit;
 }
 
 
 /* =========================================================
-   HEADER
+   TOP HEADER
    ========================================================= */
 
 .topbar {
-  flex: 0 0 auto;
-
-  min-height: 90px;
+  height: 106px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  gap: 16px;
+  padding: 12px 22px;
 
-  padding: 12px 20px;
+  background: #165989;
+  color: #ffffff;
 
-  background: #0f4c81;
-  color: white;
+  gap: 20px;
 
-  z-index: 1500;
+  position: relative;
+  z-index: 300;
 }
 
-.topbar h1 {
-  margin: 0;
-  font-size: 26px;
-  line-height: 1.15;
-}
-
-.topbar p {
-  margin: 4px 0 0;
-  font-size: 14px;
-}
 
 .brand-left {
   min-width: 0;
-  flex: 1;
+  flex: 1 1 auto;
 }
+
+
+.brand-left h1 {
+  margin: 0;
+
+  font-size: 29px;
+  line-height: 1.1;
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+
+.brand-left p {
+  margin: 5px 0 0 0;
+
+  font-size: 14px;
+  line-height: 1.2;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   HEADER LOGOS
+   ========================================================= */
 
 .logo-row {
   display: flex;
@@ -69,43 +99,101 @@ body {
   justify-content: flex-end;
 
   gap: 10px;
+
+  flex: 0 0 auto;
 }
+
 
 .logo {
-  height: 52px;
-  width: auto;
-
-  max-width: 170px;
+  display: block;
 
   object-fit: contain;
+  object-position: center;
 
-  background: white;
+  background: #ffffff;
 
-  padding: 4px;
+  border-radius: 10px;
 
-  border-radius: 8px;
-}
-
-.banner-logo {
-  max-width: 240px;
-  height: 44px;
+  box-sizing: border-box;
 }
 
 
 /* =========================================================
-   PAGE
+   MUNICIPALITY LOGO
+   ========================================================= */
+
+.logo-row .municipality-logo {
+  width: 64px !important;
+  height: 64px !important;
+
+  padding: 1px;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: #ffffff;
+
+  border-radius: 10px;
+
+  flex: 0 0 64px;
+}
+
+
+/* =========================================================
+   MAIN PATH / PROJECT LOGO
+   ========================================================= */
+
+/*
+   Larger project logo with almost no internal padding.
+
+   This gives the actual organization names more room
+   instead of using the space for a thick white border.
+*/
+
+.logo-row .banner-logo {
+  width: 420px !important;
+  height: 68px !important;
+
+  max-width: 48vw;
+
+  padding: 1px 2px;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: #ffffff;
+
+  border-radius: 9px;
+
+  flex: 0 0 auto;
+}
+
+
+/* =========================================================
+   REMOVE ADHIKA LOGO
+   ========================================================= */
+
+/*
+   ADHIKA stays hidden even if its <img> line
+   still exists in the six index.html files.
+*/
+
+.logo-row img[alt="ADHIKA"] {
+  display: none !important;
+}
+
+
+/* =========================================================
+   MAIN PAGE
    ========================================================= */
 
 .page {
-  position: relative;
-
   display: flex;
 
-  flex: 1 1 auto;
-
   width: 100%;
+  height: calc(100vh - 106px);
 
-  min-height: 0;
+  overflow: hidden;
 }
 
 
@@ -114,72 +202,73 @@ body {
    ========================================================= */
 
 .sidebar {
-  position: relative;
-
-  width: 280px;
-  min-width: 280px;
+  width: 320px;
+  min-width: 320px;
 
   height: 100%;
-
-  padding: 12px;
-
-  background: #f7f9fc;
-
-  border-right: 1px solid #d1d5db;
 
   overflow-y: auto;
   overflow-x: hidden;
 
-  z-index: 1100;
+  padding: 14px;
 
-  transition: transform 0.25s ease;
+  background: #f5f7fa;
+
+  border-right: 1px solid #d7e0e8;
+
+  position: relative;
+
+  z-index: 200;
 }
 
-
-/* Sidebar scrollbar */
 
 .sidebar::-webkit-scrollbar {
   width: 8px;
 }
 
+
 .sidebar::-webkit-scrollbar-track {
   background: transparent;
 }
 
+
 .sidebar::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #bdc9d5;
+
   border-radius: 10px;
 }
 
 
 /* =========================================================
-   SIDEBAR PANELS
+   SIDEBAR CARDS
    ========================================================= */
 
 .panel-card {
-  margin-bottom: 12px;
+  background: #ffffff;
 
-  padding: 12px;
+  border: 1px solid #d8e1e9;
 
-  background: white;
+  border-radius: 13px;
 
-  border: 1px solid #dbe4ee;
+  margin-bottom: 14px;
 
-  border-radius: 12px;
+  overflow: hidden;
 }
 
-.panel-card h3 {
-  margin: 0 0 12px;
 
-  font-size: 17px;
+.panel-card > h3 {
+  margin: 0;
+
+  padding: 15px 14px;
+
+  font-size: 18px;
 
   color: #123b63;
 }
 
 
 /* =========================================================
-   COLLAPSIBLE SIDEBAR SECTIONS
-   app.js can use these later
+   COLLAPSIBLE PANEL HEADER
    ========================================================= */
 
 .panel-header {
@@ -189,15 +278,17 @@ body {
   align-items: center;
   justify-content: space-between;
 
-  padding: 0;
+  gap: 10px;
+
+  padding: 14px;
 
   border: none;
 
-  background: transparent;
+  background: #ffffff;
 
   color: #123b63;
 
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
 
   text-align: left;
@@ -205,19 +296,28 @@ body {
   cursor: pointer;
 }
 
+
+.panel-header:hover {
+  background: #f8fafc;
+}
+
+
 .panel-header-arrow {
-  font-size: 12px;
+  font-size: 13px;
 
   transition: transform 0.2s ease;
 }
+
 
 .panel-card.collapsed .panel-header-arrow {
   transform: rotate(-90deg);
 }
 
+
 .panel-content {
-  margin-top: 12px;
+  padding: 0 14px 14px 14px;
 }
+
 
 .panel-card.collapsed .panel-content {
   display: none;
@@ -229,70 +329,70 @@ body {
    ========================================================= */
 
 .layer-group {
-  margin-bottom: 15px;
+  margin-bottom: 17px;
 }
+
 
 .layer-group:last-child {
   margin-bottom: 0;
 }
 
+
 .layer-group-title {
-  margin: 0 0 8px;
+  margin-bottom: 9px;
+
+  color: #63758b;
 
   font-size: 11px;
-
   font-weight: 700;
 
-  letter-spacing: 0.05em;
+  letter-spacing: 1px;
 
   text-transform: uppercase;
-
-  color: #64748b;
 }
 
+
 .layer-empty-message {
-  padding: 5px 0;
+  color: #667085;
 
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.45;
 
-  line-height: 1.4;
-
-  color: #64748b;
+  padding: 4px 0;
 }
 
 
 /* =========================================================
-   LAYER TOGGLE ROWS
+   TOGGLE ROWS
    ========================================================= */
 
 .switch-row {
-  min-height: 34px;
-
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
-  gap: 10px;
+  gap: 12px;
 
-  margin-bottom: 8px;
+  min-height: 40px;
 
-  font-size: 14px;
+  padding: 3px 0;
 }
 
-.switch-row:last-child {
-  margin-bottom: 0;
-}
 
-.switch-row > span,
 .switch-row-label {
+  flex: 1 1 auto;
+
   min-width: 0;
 
+  font-size: 14px;
   line-height: 1.3;
+
+  color: #172033;
 }
 
 
 /* =========================================================
-   SWITCH
+   TOGGLE SWITCH
    ========================================================= */
 
 .switch {
@@ -300,150 +400,192 @@ body {
 
   display: inline-block;
 
-  width: 42px;
-  min-width: 42px;
+  width: 50px;
+  height: 28px;
 
-  height: 24px;
-
-  flex: 0 0 auto;
+  flex: 0 0 50px;
 }
+
 
 .switch input {
-  opacity: 0;
-
   width: 0;
   height: 0;
+
+  opacity: 0;
 }
+
 
 .slider {
   position: absolute;
 
   inset: 0;
 
-  background: #cbd5e1;
-
-  border-radius: 24px;
-
   cursor: pointer;
 
-  transition: 0.2s;
+  background: #ccd7e3;
+
+  border-radius: 999px;
+
+  transition: 0.2s ease;
 }
 
-.slider:before {
+
+.slider::before {
   content: "";
 
   position: absolute;
 
+  width: 22px;
+  height: 22px;
+
   left: 3px;
   top: 3px;
 
-  width: 18px;
-  height: 18px;
-
-  background: white;
+  background: #ffffff;
 
   border-radius: 50%;
 
-  transition: 0.2s;
+  box-shadow:
+    0 1px 3px
+    rgba(0, 0, 0, 0.22);
+
+  transition: 0.2s ease;
 }
+
 
 .switch input:checked + .slider {
-  background: #0f4c81;
+  background: #155d91;
 }
 
-.switch input:checked + .slider:before {
-  transform: translateX(18px);
+
+.switch input:checked + .slider::before {
+  transform: translateX(22px);
 }
+
 
 .switch input:disabled + .slider {
-  opacity: 0.45;
   cursor: not-allowed;
+
+  opacity: 0.6;
 }
 
 
 /* =========================================================
-   STANDARD CONTROLS
+   BASEMAP SELECT
    ========================================================= */
 
-.widget-select,
-.widget-box,
-.action-btn {
-  width: 100%;
-}
-
 .widget-select {
-  padding: 10px;
+  width: 100%;
 
-  border: 1px solid #cbd5e1;
+  height: 44px;
 
-  border-radius: 8px;
+  padding: 0 12px;
 
-  background: white;
+  border: 1px solid #cbd8e4;
 
-  font-size: 14px;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  outline: none;
 }
+
+
+.widget-select:focus {
+  border-color: #155d91;
+
+  box-shadow:
+    0 0 0 2px
+    rgba(21, 93, 145, 0.12);
+}
+
+
+/* =========================================================
+   CURRENT WEATHER BOX
+   ========================================================= */
 
 .widget-box {
-  padding: 10px;
+  width: 100%;
+
+  padding: 12px;
 
   background: #f8fafc;
 
-  border: 1px solid #dbe4ee;
+  border: 1px solid #d8e1e9;
 
-  border-radius: 8px;
+  border-radius: 9px;
 
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.45;
 
-  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
+
+.weather-info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin: 7px 0;
+}
+
+
+.weather-info-row > span,
+.weather-info-row > div {
+  flex: 1 1 auto;
+}
+
+
+.weather-info-row strong {
+  flex: 0 0 auto;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
 .action-btn {
-  padding: 10px 12px;
+  width: 100%;
+
+  min-height: 42px;
+
+  padding: 9px 13px;
 
   border: none;
 
   border-radius: 8px;
 
-  background: #0f4c81;
+  background: #155d91;
 
-  color: white;
+  color: #ffffff;
 
-  font-size: 14px;
+  font-weight: 600;
 
   cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
+
 
 .action-btn:hover {
-  background: #123b63;
+  background: #104b76;
 }
 
 
-/* =========================================================
-   WEATHER SIDEBAR
-   ========================================================= */
-
-.weather-location {
-  margin-bottom: 8px;
-
-  font-size: 14px;
-}
-
-.weather-info-row {
-  transition: background 0.15s ease;
-}
-
-.weather-info-row:hover {
-  background: rgba(15, 76, 129, 0.06) !important;
-}
-
-.weather-source {
-  margin-top: 10px;
-
-  font-size: 11px;
-
-  line-height: 1.45;
-
-  color: #64748b;
+.action-btn:active {
+  transform: translateY(1px);
 }
 
 
@@ -452,43 +594,91 @@ body {
    ========================================================= */
 
 .legend-list {
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.45;
 
-  line-height: 1.7;
+  color: #27364a;
 }
+
+
+.legend-list strong {
+  display: inline-block;
+
+  margin-bottom: 4px;
+
+  color: #132b45;
+}
+
+
+.legend-list > div {
+  margin: 3px 0;
+}
+
 
 .legend-swatch {
   display: inline-block;
 
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
 
-  margin-right: 8px;
+  margin-right: 9px;
 
   vertical-align: middle;
 
   border-radius: 50%;
-
-  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 
 /* =========================================================
-   MAP
+   DEVELOPER CREDIT
+   ========================================================= */
+
+.sidebar::after {
+  content:
+    "WebGIS developed by\A Patricia Natividad M. Verano\A GIS Specialist\A trishverano@gmail.com";
+
+  display: block;
+
+  white-space: pre-line;
+
+  margin:
+    4px 2px
+    20px 2px;
+
+  padding:
+    12px 10px
+    4px 10px;
+
+  border-top:
+    1px solid #d7e0e8;
+
+  color: #657486;
+
+  font-size: 9.5px;
+  line-height: 1.55;
+
+  letter-spacing: 0;
+}
+
+
+/* =========================================================
+   MAP AREA
    ========================================================= */
 
 .map-wrap {
-  position: relative;
-
-  flex: 1;
+  flex: 1 1 auto;
 
   min-width: 0;
-  min-height: 0;
 
   height: 100%;
 
+  position: relative;
+
   overflow: hidden;
+
+  background: #dce8ef;
 }
+
 
 #map {
   width: 100%;
@@ -497,43 +687,66 @@ body {
 
 
 /* =========================================================
-   FEATURE POPUP
+   OPENLAYERS ZOOM
+   ========================================================= */
+
+.ol-zoom {
+  top: 10px !important;
+  left: 10px !important;
+}
+
+
+/* =========================================================
+   POPUP
    ========================================================= */
 
 .map-popup {
   position: absolute;
 
-  left: 12px;
-  bottom: 125px;
+  z-index: 500;
 
-  min-width: 220px;
-  max-width: 300px;
+  top: 18px;
+  right: 18px;
 
-  padding: 12px;
+  width: min(
+    310px,
+    calc(100% - 36px)
+  );
 
-  background: white;
+  padding: 12px 14px;
 
-  border: 1px solid #cbd5e1;
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.96
+    );
+
+  border:
+    1px solid
+    #d1dbe5;
 
   border-radius: 10px;
 
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 8px 25px
+    rgba(0, 0, 0, 0.16);
 
-  font-size: 13px;
-
+  font-size: 12px;
   line-height: 1.5;
-
-  z-index: 1000;
 
   pointer-events: none;
 }
 
-.map-popup h4 {
-  margin: 0 0 6px;
 
-  font-size: 14px;
+.map-popup h4 {
+  margin:
+    0 0 6px 0;
 
   color: #123b63;
+
+  font-size: 14px;
 }
 
 
@@ -549,433 +762,436 @@ body {
   top: 12px;
   left: 12px;
 
-  z-index: 1250;
+  z-index: 450;
 
-  padding: 9px 11px;
-
-  border: 1px solid #cbd5e1;
-
-  border-radius: 8px;
-
-  background: rgba(255, 255, 255, 0.96);
-
-  font-size: 18px;
-
-  cursor: pointer;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-
-/* =========================================================
-   SIDEBAR CLOSE BUTTON
-   Created later by app.js on mobile
-   ========================================================= */
-
-.sidebar-close-btn {
-  display: none;
-
-  position: sticky;
-
-  top: 0;
-
-  width: 100%;
-
-  margin-bottom: 10px;
-
-  padding: 10px;
+  width: 42px;
+  height: 42px;
 
   border: none;
 
   border-radius: 8px;
 
-  background: #123b63;
+  background: #155d91;
 
-  color: white;
+  color: #ffffff;
 
-  font-size: 14px;
+  font-size: 23px;
+
+  box-shadow:
+    0 3px 12px
+    rgba(0, 0, 0, 0.20);
 
   cursor: pointer;
-
-  z-index: 10;
 }
 
 
-/* =========================================================
-   MOBILE DARK BACKDROP
-   ========================================================= */
-
-.sidebar-backdrop {
+.sidebar-close-btn {
   display: none;
-
-  position: absolute;
-
-  inset: 0;
-
-  background: rgba(0, 0, 0, 0.35);
-
-  z-index: 1050;
-}
-
-.sidebar-backdrop.active {
-  display: block;
 }
 
 
 /* =========================================================
-   WEATHER OVERLAY SELECTOR
-   This will float on the map.
+   WEATHER OVERLAY CONTROL
    ========================================================= */
 
 .weather-overlay-control {
   position: absolute;
 
   left: 50%;
-  bottom: 74px;
+  bottom: 84px;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
-  width: min(780px, calc(100% - 40px));
+  z-index: 400;
 
-  padding: 7px;
+  width:
+    min(
+      920px,
+      calc(100% - 80px)
+    );
 
-  background: rgba(255, 255, 255, 0.95);
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.94
+    );
 
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border:
+    1px solid
+    rgba(
+      199,
+      210,
+      221,
+      0.95
+    );
 
-  border-radius: 12px;
+  border-radius:
+    13px 13px 0 0;
 
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.18);
+  box-shadow:
+    0 5px 18px
+    rgba(0, 0, 0, 0.14);
 
-  z-index: 900;
-
-  backdrop-filter: blur(4px);
+  overflow: hidden;
 }
 
 
-/* =========================================================
-   WEATHER BUTTON ROW
-   ========================================================= */
-
 .weather-overlay-tabs {
   display: flex;
-
   align-items: center;
 
   gap: 5px;
 
-  overflow-x: auto;
+  width: 100%;
 
-  padding-bottom: 2px;
+  padding: 7px 8px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
 
   scrollbar-width: thin;
 }
 
+
 .weather-overlay-tabs::-webkit-scrollbar {
-  height: 5px;
+  height: 4px;
 }
 
-.weather-overlay-tabs::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-
-  border-radius: 10px;
-}
 
 .weather-overlay-btn {
   flex: 0 0 auto;
 
-  padding: 7px 10px;
+  min-height: 34px;
 
-  border: 1px solid #d5dee8;
+  padding: 6px 12px;
+
+  border:
+    1px solid
+    #ccd8e4;
 
   border-radius: 7px;
 
-  background: white;
+  background: #ffffff;
 
-  color: #334155;
+  color: #344054;
 
   font-size: 12px;
 
   white-space: nowrap;
 
   cursor: pointer;
-
-  transition: 0.15s;
 }
+
 
 .weather-overlay-btn:hover {
-  background: #edf4fa;
+  background: #f4f7fa;
 }
 
+
 .weather-overlay-btn.active {
-  background: #123b63;
+  background: #123f66;
 
-  border-color: #123b63;
+  color: #ffffff;
 
-  color: white;
+  border-color: #123f66;
 }
 
 
 /* =========================================================
-   FLOATING WEATHER LEGEND
-   Zoom Earth-style concept
+   WEATHER MAP LEGEND
    ========================================================= */
 
 .weather-map-legend {
   position: absolute;
 
   left: 50%;
-  bottom: 10px;
+  bottom: 18px;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
-  width: min(780px, calc(100% - 40px));
+  z-index: 399;
 
-  padding: 8px 10px;
+  width:
+    min(
+      920px,
+      calc(100% - 80px)
+    );
 
-  background: rgba(255, 255, 255, 0.95);
+  min-height: 67px;
 
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 8px 12px;
 
-  border-radius: 10px;
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.96
+    );
 
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
+  border:
+    1px solid
+    rgba(
+      199,
+      210,
+      221,
+      0.95
+    );
 
-  z-index: 900;
+  border-radius:
+    0 0 13px 13px;
 
-  backdrop-filter: blur(4px);
+  box-shadow:
+    0 5px 18px
+    rgba(0, 0, 0, 0.14);
 }
+
 
 .weather-map-legend.hidden {
   display: none;
 }
 
 
-/* =========================================================
-   WEATHER LEGEND HEADER
-   ========================================================= */
-
 .weather-legend-header {
   display: flex;
-
+  align-items: flex-start;
   justify-content: space-between;
 
-  align-items: baseline;
+  gap: 12px;
 
-  gap: 8px;
-
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
+
 
 .weather-legend-title {
-  font-size: 12px;
+  color: #24364b;
 
+  font-size: 13px;
   font-weight: 700;
-
-  color: #1f2937;
 }
+
 
 .weather-legend-subtitle {
-  font-size: 10px;
+  color: #687789;
 
-  color: #64748b;
+  font-size: 10px;
 }
 
 
-/* =========================================================
-   COLORED GRADIENT BAR
-   Colors are inserted by app.js
-   ========================================================= */
+.weather-current-indicator {
+  display: inline-block;
 
-.weather-gradient-bar {
-  width: 100%;
+  padding: 3px 7px;
 
-  height: 14px;
+  background: #1f2937;
 
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #ffffff;
 
   border-radius: 5px;
 
-  overflow: hidden;
-}
-
-
-/* =========================================================
-   GRADIENT VALUES
-   ========================================================= */
-
-.weather-gradient-labels {
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 4px;
-
-  margin-top: 4px;
-
-  font-size: 9px;
-
-  color: #475569;
-}
-
-.weather-gradient-labels span {
-  flex: 1;
-
-  min-width: 0;
-
-  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
 
   white-space: nowrap;
 }
 
 
 /* =========================================================
-   HEAT INDEX COLORED CATEGORIES
+   WEATHER GRADIENT
    ========================================================= */
 
-.heat-legend-row {
-  display: grid;
-
-  grid-template-columns: repeat(5, 1fr);
+.weather-gradient-bar {
+  height: 14px;
 
   width: 100%;
 
-  overflow: hidden;
+  border-radius: 4px;
 
-  border: 1px solid rgba(0, 0, 0, 0.12);
-
-  border-radius: 5px;
+  border:
+    1px solid
+    rgba(0, 0, 0, 0.05);
 }
 
-.heat-legend-color {
-  height: 14px;
-}
 
-.heat-legend-labels {
-  display: grid;
+.weather-gradient-labels {
+  display: flex;
+  justify-content: space-between;
 
-  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
 
-  gap: 2px;
+  margin-top: 3px;
 
-  margin-top: 4px;
+  color: #465569;
 
-  font-size: 8px;
-
-  line-height: 1.15;
-
-  color: #475569;
+  font-size: 9px;
 
   text-align: center;
 }
 
+
+.weather-gradient-labels span {
+  flex: 1 1 0;
+}
+
+
+/* =========================================================
+   HEAT INDEX LEGEND
+   ========================================================= */
+
+.heat-legend-row {
+  display: flex;
+
+  width: 100%;
+  height: 15px;
+
+  overflow: hidden;
+
+  border-radius: 4px;
+}
+
+
+.heat-legend-color {
+  flex: 1 1 0;
+}
+
+
+.heat-legend-labels {
+  display: flex;
+
+  margin-top: 3px;
+
+  color: #465569;
+
+  font-size: 8px;
+
+  text-align: center;
+}
+
+
+.heat-legend-labels > div {
+  flex: 1 1 0;
+}
+
+
 .heat-legend-labels strong {
   display: block;
 
-  font-size: 8px;
+  font-size: 8.5px;
 }
 
 
 /* =========================================================
-   CURRENT WEATHER VALUE MARKER
+   SIDEBAR BACKDROP
    ========================================================= */
 
-.weather-current-indicator {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  padding: 3px 7px;
-
-  background: #1f2937;
-
-  border-radius: 5px;
-
-  color: white;
-
-  font-size: 10px;
-
-  font-weight: 700;
+.sidebar-backdrop {
+  display: none;
 }
 
 
 /* =========================================================
-   WIND ARROW
+   MEDIUM DESKTOP / TABLET
    ========================================================= */
 
-.wind-arrow-label {
-  font-size: 18px;
+@media (max-width: 1100px) {
 
-  font-weight: 700;
+  .sidebar {
+    width: 290px;
+    min-width: 290px;
+  }
 
-  line-height: 1;
 
-  text-shadow:
-    -1px -1px 0 white,
-    1px -1px 0 white,
-    -1px 1px 0 white,
-    1px 1px 0 white;
+  .brand-left h1 {
+    font-size: 24px;
+  }
+
+
+  .logo-row .banner-logo {
+    width: 350px !important;
+
+    max-width: 42vw;
+  }
+
+
+  .weather-overlay-control,
+  .weather-map-legend {
+    width:
+      min(
+        820px,
+        calc(100% - 50px)
+      );
+  }
+
 }
 
 
 /* =========================================================
-   OPENLAYERS ATTRIBUTION
-   ========================================================= */
-
-.ol-attribution {
-  font-size: 10px;
-}
-
-
-/* =========================================================
-   TABLETS / MOBILE
+   TABLET / MOBILE
    ========================================================= */
 
 @media (max-width: 900px) {
 
+  body {
+    overflow: hidden;
+  }
+
+
   .topbar {
-    min-height: 62px;
+    height: 92px;
 
-    padding: 8px 10px;
+    padding: 10px 12px;
 
-    gap: 8px;
-  }
-
-  .topbar h1 {
-    font-size: 18px;
-  }
-
-  .topbar p {
-    font-size: 11px;
+    gap: 10px;
   }
 
 
-  /* Keep logos compact */
+  .brand-left h1 {
+    font-size: 20px;
+  }
+
+
+  .brand-left p {
+    font-size: 12px;
+  }
+
 
   .logo-row {
-    flex-wrap: nowrap;
-
-    gap: 4px;
-  }
-
-  .logo {
-    height: 34px;
-
-    max-width: 80px;
-
-    padding: 2px;
-  }
-
-  .banner-logo {
-    height: 30px;
-
-    max-width: 120px;
+    gap: 5px;
   }
 
 
-  /* Sidebar becomes slide-out */
+  .logo-row .municipality-logo {
+    width: 52px !important;
+    height: 52px !important;
+
+    padding: 1px;
+
+    flex-basis: 52px;
+  }
+
+
+  .logo-row .banner-logo {
+    width: 280px !important;
+    height: 54px !important;
+
+    max-width: 52vw;
+
+    padding: 0 2px;
+  }
+
+
+  .page {
+    height:
+      calc(
+        100vh -
+        92px
+      );
+  }
+
 
   .sidebar {
     position: absolute;
@@ -983,200 +1199,319 @@ body {
     left: 0;
     top: 0;
 
-    width: min(88vw, 340px);
+    width:
+      min(
+        340px,
+        88vw
+      );
+
     min-width: 0;
 
     height: 100%;
 
-    transform: translateX(-105%);
+    transform:
+      translateX(-105%);
 
-    padding: 10px;
+    transition:
+      transform
+      0.25s ease;
 
-    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.22);
+    z-index: 700;
 
-    z-index: 1150;
+    box-shadow:
+      5px 0 18px
+      rgba(0, 0, 0, 0.2);
   }
+
 
   .sidebar.active {
-    transform: translateX(0);
+    transform:
+      translateX(0);
   }
+
+
+  .sidebar-close-btn {
+    display: block;
+
+    width: 100%;
+
+    margin-bottom: 12px;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #123f66;
+
+    color: #ffffff;
+
+    font-weight: 600;
+
+    cursor: pointer;
+  }
+
+
+  .sidebar-backdrop {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 650;
+
+    background:
+      rgba(
+        0,
+        0,
+        0,
+        0.35
+      );
+
+    display: none;
+  }
+
+
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
 
   .mobile-menu-btn {
     display: block;
   }
 
-  .sidebar-close-btn {
-    display: block;
+
+  .weather-overlay-control {
+    width:
+      calc(
+        100% -
+        24px
+      );
+
+    bottom: 88px;
   }
 
 
-  /* Larger tap targets */
+  .weather-map-legend {
+    width:
+      calc(
+        100% -
+        24px
+      );
 
-  .switch-row {
-    min-height: 40px;
+    bottom: 14px;
   }
+
+}
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .topbar {
+    height: 84px;
+
+    padding: 8px 9px;
+  }
+
+
+  .brand-left h1 {
+    font-size: 16px;
+    line-height: 1.15;
+  }
+
+
+  .brand-left p {
+    margin-top: 3px;
+
+    font-size: 10px;
+  }
+
+
+  .logo-row {
+    gap: 3px;
+  }
+
+
+  .logo-row .municipality-logo {
+    width: 40px !important;
+    height: 40px !important;
+
+    flex-basis: 40px;
+
+    padding: 0;
+  }
+
+
+  .logo-row .banner-logo {
+    width: 205px !important;
+    height: 46px !important;
+
+    max-width: 59vw;
+
+    padding: 0 1px;
+  }
+
+
+  .page {
+    height:
+      calc(
+        100vh -
+        84px
+      );
+  }
+
+
+  .sidebar {
+    padding: 10px;
+
+    width:
+      min(
+        320px,
+        91vw
+      );
+  }
+
+
+  .panel-card {
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+  }
+
+
+  .panel-header {
+    padding: 12px;
+
+    font-size: 16px;
+  }
+
+
+  .panel-content {
+    padding:
+      0
+      12px
+      12px
+      12px;
+  }
+
+
+  .switch-row-label {
+    font-size: 13px;
+  }
+
 
   .switch {
     width: 46px;
-    min-width: 46px;
-
     height: 26px;
+
+    flex-basis: 46px;
   }
 
-  .slider:before {
+
+  .slider::before {
     width: 20px;
     height: 20px;
   }
 
-  .switch input:checked + .slider:before {
-    transform: translateX(20px);
+
+  .switch input:checked + .slider::before {
+    transform:
+      translateX(
+        20px
+      );
   }
 
 
-  /* Weather controls */
+  .mobile-menu-btn {
+    width: 38px;
+    height: 38px;
+
+    top: 9px;
+    left: 9px;
+
+    font-size: 20px;
+  }
+
 
   .weather-overlay-control {
-    width: calc(100% - 24px);
+    left: 8px;
+    right: 8px;
+    bottom: 100px;
 
-    bottom: 68px;
+    width: auto;
 
-    padding: 6px;
+    transform: none;
+
+    border-radius:
+      10px 10px 0 0;
   }
+
+
+  .weather-overlay-tabs {
+    padding: 5px;
+
+    gap: 4px;
+  }
+
 
   .weather-overlay-btn {
-    padding: 7px 9px;
+    min-height: 31px;
 
-    font-size: 11px;
+    padding: 5px 9px;
+
+    font-size: 10px;
   }
 
-
-  /* Weather legend */
 
   .weather-map-legend {
-    width: calc(100% - 24px);
+    left: 8px;
+    right: 8px;
+    bottom: 9px;
 
-    bottom: 8px;
+    width: auto;
 
-    padding: 6px 8px;
+    transform: none;
+
+    min-height: 80px;
+
+    padding: 7px 9px;
+
+    border-radius:
+      0 0 10px 10px;
   }
 
-  .weather-gradient-bar {
-    height: 12px;
-  }
-
-  .weather-gradient-labels {
-    font-size: 8px;
-  }
 
   .weather-legend-title {
     font-size: 11px;
   }
+
 
   .weather-legend-subtitle {
     font-size: 9px;
   }
 
 
-  .map-popup {
-    bottom: 125px;
+  .weather-current-indicator {
+    font-size: 9px;
 
-    max-width: 260px;
-  }
-}
-
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-  .topbar {
-    min-height: 56px;
-
-    padding: 6px 8px;
+    padding: 2px 5px;
   }
 
-  .topbar h1 {
-    font-size: 15px;
-  }
-
-  .topbar p {
-    font-size: 10px;
-  }
-
-
-  .logo {
-    height: 27px;
-
-    max-width: 55px;
-  }
-
-  .banner-logo {
-    height: 25px;
-
-    max-width: 85px;
-  }
-
-
-  .panel-card {
-    padding: 10px;
-
-    margin-bottom: 9px;
-  }
-
-  .panel-card h3 {
-    font-size: 16px;
-  }
-
-
-  /* Weather control stays horizontally scrollable */
-
-  .weather-overlay-control {
-    width: calc(100% - 16px);
-
-    bottom: 64px;
-
-    padding: 5px;
-  }
-
-  .weather-overlay-tabs {
-    gap: 4px;
-  }
-
-  .weather-overlay-btn {
-    padding: 6px 8px;
-
-    font-size: 10px;
-  }
-
-
-  /* Compact weather legend */
-
-  .weather-map-legend {
-    width: calc(100% - 16px);
-
-    bottom: 5px;
-
-    padding: 5px 6px;
-  }
-
-  .weather-gradient-bar {
-    height: 10px;
-  }
 
   .weather-gradient-labels {
     font-size: 7px;
   }
 
-  .weather-legend-header {
-    margin-bottom: 4px;
-  }
-
 
   .heat-legend-labels {
-    font-size: 7px;
+    font-size: 6.5px;
   }
+
 
   .heat-legend-labels strong {
     font-size: 7px;
@@ -1184,105 +1519,29 @@ body {
 
 
   .map-popup {
-    left: 8px;
+    top: 55px;
+    right: 8px;
 
-    bottom: 120px;
+    width:
+      calc(
+        100% -
+        16px
+      );
 
-    min-width: 190px;
-
-    max-width: calc(100% - 16px);
-
-    padding: 9px;
-
-    font-size: 11px;
-  }
-}
-
-
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 420px) {
-
-  .sidebar {
-    width: 92vw;
-  }
-
-  .topbar h1 {
-    font-size: 13px;
-  }
-
-  .logo {
-    height: 24px;
-
-    max-width: 45px;
-  }
-
-  .banner-logo {
-    max-width: 70px;
-  }
-
-  .switch-row {
-    font-size: 13px;
+    padding: 10px 12px;
   }
 
 
-  /* Allow long legend labels to scroll */
+  .sidebar::after {
+    margin:
+      2px 2px
+      18px 2px;
 
-  .weather-gradient-labels {
-    justify-content: flex-start;
+    padding:
+      10px 8px
+      4px 8px;
 
-    gap: 12px;
-
-    overflow-x: auto;
+    font-size: 9px;
   }
 
-  .weather-gradient-labels span {
-    flex: 0 0 auto;
-  }
-}
-
-/* ==========================================================
-   MUNICIPALITY LOGO
-   Clips oversized / uneven municipal logos into one
-   consistent header box.
-   ========================================================== */
-
-.municipality-logo {
-  width: 64px;
-  height: 64px;
-
-  object-fit: cover;
-  object-position: center;
-
-  border-radius: 10px;
-
-  background: #ffffff;
-
-  overflow: hidden;
-
-  flex: 0 0 64px;
-}
-
-/* ==========================================================
-   MUNICIPALITY LOGOS
-   ========================================================== */
-
-.municipality-logo {
-  width: 64px !important;
-  height: 64px !important;
-
-  object-fit: contain;
-  object-position: center;
-
-  background: #ffffff;
-
-  padding: 4px;
-
-  border-radius: 10px;
-
-  box-sizing: border-box;
-
-  flex: 0 0 64px;
 }
